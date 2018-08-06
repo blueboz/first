@@ -17,10 +17,14 @@ public class SwtMain {
 
 		var display = new Display();
 		var shell = new Shell(display);
-		shell.setSize(500,400);
-		var composite = new Composite(shell, SWT.BORDER);
+		shell.setBounds(50,50,600,500);
+		var composite = new Composite(shell, SWT.NONE);
 		composite.setBounds(10,10,500,400);
-		var text=new Text(composite,SWT.READ_ONLY|SWT.MULTI);
+		composite.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+		var comp2=new Composite(shell, SWT.NONE);
+		comp2.setBounds(500, 10, 500, 400);
+		comp2.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_YELLOW));
+		var text=new Text(composite,SWT.READ_ONLY|SWT.MULTI|SWT.BORDER);
 		
 		text.setText("Î´Â¼Èë...\n");
 		text.setBounds(0, 0, 480, 380);
@@ -48,7 +52,7 @@ public class SwtMain {
 			@Override
 			public void shellClosed(ShellEvent arg0) {
 				text.append("Shell Closed\n");
-				int max=3;
+				int max=0;
 				IntStream.range(0, max).forEach(n->{
 					text.append(max-n+"s...\n");
 					try {
