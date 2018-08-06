@@ -1,9 +1,11 @@
-package cn.boz.domain;
+package cn.boz.provider;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Image;
+
+import cn.boz.domain.User;
 
 public class ListLabelProvider implements ILabelProvider {
 

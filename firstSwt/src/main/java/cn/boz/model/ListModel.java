@@ -1,10 +1,13 @@
-package cn.boz.domain;
+package cn.boz.model;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
+
+import cn.boz.domain.User;
+import cn.boz.provider.ListContentProvider;
 
 
 public class ListModel {

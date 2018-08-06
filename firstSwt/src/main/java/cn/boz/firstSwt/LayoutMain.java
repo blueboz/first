@@ -15,10 +15,10 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import cn.boz.domain.ListContentProvider;
-import cn.boz.domain.ListLabelProvider;
-import cn.boz.domain.ListModel;
 import cn.boz.domain.User;
+import cn.boz.model.ListModel;
+import cn.boz.provider.ListContentProvider;
+import cn.boz.provider.ListLabelProvider;
 
 public class LayoutMain {
 	private int dw = 0;

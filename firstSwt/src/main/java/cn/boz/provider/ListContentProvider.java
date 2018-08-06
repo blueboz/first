@@ -1,4 +1,4 @@
-package cn.boz.domain;
+package cn.boz.provider;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -9,6 +9,8 @@ import java.util.stream.IntStream;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.Viewer;
+
+import cn.boz.model.ListModel;
 
 public class ListContentProvider implements IStructuredContentProvider,PropertyChangeListener{
 
