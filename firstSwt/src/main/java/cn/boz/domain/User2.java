@@ -1,6 +1,6 @@
 package cn.boz.domain;
 
-public class User {
+public class User2 {
 	private String id;
 	private String name;
 	private String age;

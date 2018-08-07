@@ -2,22 +2,31 @@ package cn.boz.provider;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.widgets.Display;
 
-import cn.boz.domain.User;
+import cn.boz.domain.User2;
 
 public class ListLabelProvider implements ILabelProvider {
 
+	private Image image;
+
+	public ListLabelProvider() {
+		super();
+		var is=this.getClass().getResourceAsStream("../res/Cursor.ico");
+		var id=new ImageData(is);
+		Display current = Display.getCurrent();
+		image = new Image(current, id);
+	}
+
 	@Override
 	public void addListener(ILabelProviderListener listener) {
-
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		image.dispose();
 	}
 
 	@Override
@@ -34,13 +43,12 @@ public class ListLabelProvider implements ILabelProvider {
 
 	@Override
 	public Image getImage(Object element) {
-		// TODO Auto-generated method stub
-		return null;
+		return image;
 	}
 
 	@Override
 	public String getText(Object element) {
-		var u=(User)element;
+		var u=(User2)element;
 		return u.getName();
 	}
 

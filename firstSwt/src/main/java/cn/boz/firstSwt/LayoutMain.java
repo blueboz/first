@@ -1,6 +1,9 @@
 package cn.boz.firstSwt;
 
+import org.eclipse.jface.viewers.IBaseLabelProvider;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
@@ -16,9 +19,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import cn.boz.domain.User;
+import cn.boz.domain.User2;
 import cn.boz.model.ListModel;
+import cn.boz.model.UserStructure;
 import cn.boz.provider.ListContentProvider;
 import cn.boz.provider.ListLabelProvider;
+import cn.boz.provider.MyTableLabelProvider;
+import cn.boz.provider.TreeContentProvider;
 
 public class LayoutMain {
 	private int dw = 0;
@@ -61,16 +68,43 @@ public class LayoutMain {
 	private void render() {
 		FillLayout fillLayout = new FillLayout();
 		shell.setLayout(fillLayout);
+		var tv=new TreeViewer(shell, SWT.NONE);
+		tv.setContentProvider(new TreeContentProvider());
+		tv.setLabelProvider(new MyTableLabelProvider());
+		UserStructure us = new UserStructure();
+		var root=new User("0", "President" );
+		us.setPresident(root);
+		tv.setInput(us);
+		us.add(new int[] {}, new User("1","m1"));
+	}
+	
+	//下面是一个ListContentProvider的演示
+	private void render5() {
+		var gl=new GridLayout();
+		gl.numColumns=3;
+		shell.setLayout(gl);
 		List list = new List(shell,SWT.BORDER);
-
 		ListViewer listViewer = new ListViewer(list);
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER,true,false,3,1);
+		list.setLayoutData(gridData);
+		Button btn1 = new Button(shell, SWT.NONE);
+		btn1.setText("确定");
 
+		Button btn2 = new Button(shell, SWT.NONE);
+		btn2.setText("确定");
+		
+		Button btn3 = new Button(shell, SWT.NONE);
+		btn3.setText("确定");
+		
+		Button btn4 = new Button(shell, SWT.NONE);
+		btn4.setText("确定");
+		
 		var lc=new ListContentProvider();
 		listViewer.setLabelProvider(new ListLabelProvider());
 		listViewer.setContentProvider(lc);
 		ListModel listModel = new ListModel();
 		listViewer.setInput(listModel);
-		User user = new User();
+		User2 user = new User2();
 		user.setName("JayChou");
 		listModel.add(user);
 		

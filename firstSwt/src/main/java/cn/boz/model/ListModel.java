@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import cn.boz.domain.User;
+import cn.boz.domain.User2;
 import cn.boz.provider.ListContentProvider;
 
 
@@ -36,7 +36,7 @@ public class ListModel {
 	public Object[] getElements() {
 		var list=new ArrayList<Object>();
 		IntStream.range(0, 7).forEach(it->{
-			User user = new User();
+			User2 user = new User2();
 			user.setId(it+"");
 			user.setName(Math.random()+"");
 			user.setAge(new Random().nextInt(99)+"");
