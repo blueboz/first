@@ -1,22 +1,44 @@
 package cn.boz.firstSwt;
 
-import org.eclipse.jface.viewers.IBaseLabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.stream.IntStream;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.math3.optim.linear.SolutionCallback;
+import org.eclipse.jface.dialogs.ProgressIndicator;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.DragDetectEvent;
+import org.eclipse.swt.events.DragDetectListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 
 import cn.boz.domain.User;
 import cn.boz.domain.User2;
@@ -35,6 +57,9 @@ public class LayoutMain {
 	private double dlgwp = .18;
 	private double dlghp = .3;
 	protected Shell shell;
+	private Display display;
+	
+	StyledText st;
 
 	public static void main(String[] args) {
 		LayoutMain layoutMain = new LayoutMain();
@@ -42,7 +67,7 @@ public class LayoutMain {
 	}
 
 	private void start() {
-		var display = new Display();
+		display = new Display();
 		shell = new Shell(display);
 		shell.setText("对话框");
 		var ca = display.getClientArea();
@@ -66,16 +91,137 @@ public class LayoutMain {
 	}
 	
 	private void render() {
+		// TODO Auto-generated method stub
+
+	}
+	/**
+	 * 
+	 */
+	private void render8() {
+		var fl=new RowLayout();
+		shell.setLayout(fl);
+		Slider sld = new Slider(shell, SWT.HORIZONTAL);
+		ProgressBar progressBar = new ProgressBar(shell, SWT.HORIZONTAL|SWT.SMOOTH);
+		ProgressIndicator pi = new ProgressIndicator(shell);
+		pi.beginTask(100);
+		sld.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent var1) {
+					new Thread(()->{
+
+						IntStream.range(1, 100).forEach(it->{
+							try {
+								Thread.sleep(100);
+								System.out.println(it);
+								if(!display.isDisposed()) {
+									
+									display.syncExec(()->{
+										if(!pi.isDisposed()) {
+											pi.worked(it/10);
+										}
+									});
+								}else {
+									return ;
+								}
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						});
+					}).start();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent var1) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		//pi.done();
+
+	}
+	
+	private void render7() {
+		var layout = new GridLayout();
+		layout.numColumns=3;
+		shell.setLayout(layout);
+		Text text = new Text(shell, SWT.SINGLE);
+		GridData gridData = new GridData(SWT.FILL, SWT.CENTER,true,false,2,1);
+		var btn=new Button(shell,SWT.PUSH);
+		GridData btngd = new GridData(SWT.FILL, SWT.CENTER,false,false,1,1);
+		btn.setText("Go!");
+		btn.setLayoutData(btngd);
+		btn.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent paramSelectionEvent) {
+				String text2 = text.getText();
+				try {
+					var is=new URL(text2).openStream();
+					String text = IOUtils.toString(is);
+					st.setText(text);
+					
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent paramSelectionEvent) {
+				
+			}
+		});
+		text.setLayoutData(gridData);
+
+		ScrolledComposite sc = new ScrolledComposite(shell, SWT.VERTICAL);
+		GridData gdc = new GridData(SWT.FILL, SWT.CENTER,true,true,3,10);
+		sc.setLayoutData(gdc);
+		st=new StyledText(sc, SWT.BORDER);
+		st.setWordWrap(true);
+		try {
+			var is=new URL("http://yss.mof.gov.cn/zhuantilanmu/zfzw/201612/t20161206_2475290.html").openStream();
+			byte[] bs = is.readAllBytes();
+			var str=IOUtils.toString(is);
+			st.setText(str);
+			//后面这两部是必须的
+			st.pack();
+			sc.setContent(st);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void render6() {
 		FillLayout fillLayout = new FillLayout();
 		shell.setLayout(fillLayout);
-		var tv=new TreeViewer(shell, SWT.NONE);
+		Tree tree = new Tree(shell,SWT.BORDER);
+		TreeColumn treeColumn = new TreeColumn(tree, SWT.NONE);
+		treeColumn.setText("名称");
+		treeColumn.setWidth(123);
+		TreeColumn id = new TreeColumn(tree, SWT.NONE);
+		id.setText("id");
+		id.setWidth(123);
+		var tv=new TreeViewer(tree);
+		tree.setHeaderVisible(true);
 		tv.setContentProvider(new TreeContentProvider());
 		tv.setLabelProvider(new MyTableLabelProvider());
 		UserStructure us = new UserStructure();
 		var root=new User("0", "President" );
 		us.setPresident(root);
 		tv.setInput(us);
-		us.add(new int[] {}, new User("1","m1"));
+		us.add(new int[] {}, new User("1","子1"));
+		us.add(new int[] {0}, new User("1","孙1"));
+		us.add(new int[] {0}, new User("1","孙2"));
+		us.add(new int[] {0}, new User("1","孙3"));
+		us.add(new int[] {0,0}, new User("1","曾孙1"));
+		us.add(new int[] {0,0}, new User("1","曾孙1"));
+		us.add(new int[] {0,0}, new User("1","曾孙1"));
+		us.add(new int[] {0,1}, new User("1","曾孙1"));
+		us.add(new int[] {0,1}, new User("1","曾孙1"));
+		us.add(new int[] {0,1}, new User("1","曾孙1"));
 	}
 	
 	//下面是一个ListContentProvider的演示

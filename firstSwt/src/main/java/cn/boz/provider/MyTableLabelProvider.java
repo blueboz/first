@@ -4,6 +4,8 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
+import cn.boz.domain.User;
+
 public class MyTableLabelProvider implements ITableLabelProvider 
 {
 
@@ -21,8 +23,8 @@ public class MyTableLabelProvider implements ITableLabelProvider
 
 	@Override
 	public boolean isLabelProperty(Object element, String property) {
-		// TODO Auto-generated method stub
-		return false;
+		System.out.println(property);
+		return true;
 	}
 
 	@Override
@@ -39,7 +41,14 @@ public class MyTableLabelProvider implements ITableLabelProvider
 
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
-		// TODO Auto-generated method stub
+		if(element instanceof User) {
+			User u=(User)element;
+			if(columnIndex==0) {
+				return u.getName();
+			}else {
+				return u.getId();
+			}
+		}
 		return "1";
 	}
 

@@ -6,7 +6,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
 
-import cn.boz.domain.User2;
+import cn.boz.domain.User;
 
 public class ListLabelProvider implements ILabelProvider {
 
@@ -48,7 +48,7 @@ public class ListLabelProvider implements ILabelProvider {
 
 	@Override
 	public String getText(Object element) {
-		var u=(User2)element;
+		var u=(User)element;
 		return u.getName();
 	}
 

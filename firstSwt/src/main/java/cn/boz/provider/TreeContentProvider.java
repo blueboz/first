@@ -2,10 +2,12 @@ package cn.boz.provider;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+import java.util.stream.IntStream;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 
@@ -37,6 +39,7 @@ public class TreeContentProvider implements ITreeContentProvider,PropertyChangeL
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
+		//最好的方法是直接查询
 		return ((User)parentElement).getUnderling().toArray();
 	}
 
@@ -49,6 +52,7 @@ public class TreeContentProvider implements ITreeContentProvider,PropertyChangeL
 	public boolean hasChildren(Object element) {
 		Vector underling = ((User)element).getUnderling();
 		return !(underling==null||underling.size()==0);
+
 	}
 
 	@Override
@@ -63,11 +67,16 @@ public class TreeContentProvider implements ITreeContentProvider,PropertyChangeL
 		ITreeContentProvider.super.inputChanged(viewer, oldInput, newInput);
 	}
 
+	/**
+	 * 属性发生改变，与其说是属性还不如说是state
+	 * statechange
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if(evt.getPropertyName().equals(UserStructure.ADD_USER)) {
 			Object[] vals = (Object[]) evt.getNewValue();
 			treeViewer.add(vals[0], vals[1]);
+			treeViewer.refresh();
 		}else {
 			treeViewer.remove(evt.getNewValue());
 		}
