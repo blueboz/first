@@ -16,8 +16,12 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DragDetectEvent;
 import org.eclipse.swt.events.DragDetectListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -39,6 +43,7 @@ import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.Widget;
 
 import cn.boz.domain.User;
 import cn.boz.domain.User2;
@@ -92,6 +97,18 @@ public class LayoutMain {
 	
 	private void render() {
 		// TODO Auto-generated method stub
+		var ly=new FillLayout();
+		shell.setLayout(ly);
+		shell.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent e) {
+				Shell se = (Shell) e.widget;
+				Rectangle ca = se.getClientArea();
+				GC gc = e.gc;
+				gc.drawLine(ca.x, ca.y, ca.width, ca.height);
+			}
+		});
 
 	}
 	/**

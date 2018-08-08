@@ -50,4 +50,7 @@ task showRepos{
 	}
 }
 
+sourceCompatibility = '1.10'
+targetCompatibility = '1.10'
+
 allprojects.each{println it.name }
