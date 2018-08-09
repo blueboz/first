@@ -13,6 +13,8 @@ apply plugin: 'java-library'
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
+    maven { url "http://repo.spring.io/release" }
+    maven { url "http://repo.spring.io/snapshot/" }
     jcenter()
 }
 
@@ -25,5 +27,28 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    
+    // https://mvnrepository.com/artifact/org.activiti/activiti-engine
+	compile group: 'org.activiti', name: 'activiti-engine', version: '5.22.0'
+	
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.46'
+	compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
+	compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.25'
+	
+	compile("org.springframework:spring-context:4.3.19.BUILD-SNAPSHOT")
+	
+	testCompile("org.springframework:spring-test:4.3.19.BUILD-SNAPSHOT")
+	compile("com.google.code.gson:gson:2.2.4")
+    
 }
+
+
+task showRepos{
+	doLast{
+		println "All repos:"
+		println repositories.collect {it.name}
+	}
+}
+
 
