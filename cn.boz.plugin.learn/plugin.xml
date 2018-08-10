@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="PLUGINDEV"
+            id="cn.boz.plugin.learn">
+      </category>
+      <view
+            id="cn.boz.plugin.learn.views.AddressView"
+            name="地址本视图"
+            icon="icons/sample.png"
+            class="cn.boz.plugin.learn.views.AddressView"
+            category="cn.boz.plugin.learn"
+            inject="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="cn.boz.plugin.learn.views.AddressView"
+               relative="org.eclipse.ui.views.ProblemView"
+               relationship="right"
+               ratio="0.5">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="cn.boz.plugin.learn.commands.category"
+            name="Sample Category">
+      </category>
+      <command
+            categoryId="cn.boz.plugin.learn.commands.category"
+            id="cn.boz.plugin.learn.commands.sampleCommand"
+            name="Sample Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="cn.boz.plugin.learn.actions.OpenAddressViewAction"
+            commandId="cn.boz.plugin.learn.commands.sampleCommand">
+      </handler>
+   </extension>
+   <!--extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="cn.boz.plugin.learn.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+   </extension-->
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="cn.boz.plugin.learn.menus.sampleMenu"
+               label="Sample Menu"
+               mnemonic="M">
+            <command
+                  commandId="cn.boz.plugin.learn.commands.sampleCommand"
+                  id="cn.boz.plugin.learn.menus.sampleCommand"
+                  mnemonic="S">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="cn.boz.plugin.learn.toolbars.sampleToolbar">
+            <command
+                  commandId="cn.boz.plugin.learn.commands.sampleCommand"
+                  icon="icons/sample.png"
+                  id="cn.boz.plugin.learn.toolbars.sampleCommand"
+                  tooltip="Say hello world">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+   </extension>
+   
+
+</plugin>
