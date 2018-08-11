@@ -1,0 +1,74 @@
+<!ELEMENT extension (actionSet+)>
+<!ATTLIST extension
+	point CDATA #REQUIRED
+	id    CDATA #IMPLIED
+	name  CDATA #IMPLIED>
+<!ELEMENT actionSet (menu* , action*)>
+<!ATTLIST actionSet
+	id          CDATA #REQUIRED
+	label       CDATA #REQUIRED
+	visible     (true | false)
+	description CDATA #IMPLIED>
+<!ELEMENT menu (separator* , groupMarker*)>
+<!ATTLIST menu
+	id    CDATA #REQUIRED
+	label CDATA #REQUIRED
+	path  CDATA #IMPLIED
+	icon  CDATA #IMPLIED>
+<!ELEMENT separator EMPTY>
+<!ATTLIST separator
+	name CDATA #REQUIRED>
+<!ELEMENT groupMarker EMPTY>
+<!ATTLIST groupMarker
+	name CDATA #REQUIRED>
+<!ELEMENT action ((selection* | enablement?) , class?)>
+<!ATTLIST action
+	id               CDATA #REQUIRED
+	label            CDATA #REQUIRED
+	accelerator      CDATA #IMPLIED
+	definitionId     IDREF #IMPLIED
+	menubarPath      CDATA #IMPLIED
+	toolbarPath      CDATA #IMPLIED
+	icon             CDATA #IMPLIED
+	disabledIcon     CDATA #IMPLIED
+	hoverIcon        CDATA #IMPLIED
+	tooltip          CDATA #IMPLIED
+	helpContextId    CDATA #IMPLIED
+	style            (push|radio|toggle|pulldown) "push"
+	state            (true | false)
+	pulldown         (true | false)
+	class            CDATA #IMPLIED
+	retarget         (true | false)
+	allowLabelUpdate (true | false)
+	enablesFor       CDATA #IMPLIED
+	mode             (FORCE_TEXT) >
+<!ELEMENT selection EMPTY>
+<!ATTLIST selection
+	class CDATA #REQUIRED
+	name  CDATA #IMPLIED>
+<!ELEMENT enablement (and | or | not | objectClass | objectState | pluginState | systemProperty)>
+<!ELEMENT and (and | or | not | objectClass | objectState | pluginState | systemProperty)>
+<!ELEMENT or (and | or | not | objectClass | objectState | pluginState | systemProperty)>
+<!ELEMENT not (and | or | not | objectClass | objectState | pluginState | systemProperty)>
+<!ELEMENT objectClass EMPTY>
+<!ATTLIST objectClass
+	name CDATA #REQUIRED>
+<!ELEMENT objectState EMPTY>
+<!ATTLIST objectState
+	name  CDATA #REQUIRED
+	value CDATA #REQUIRED>
+<!ELEMENT pluginState EMPTY>
+<!ATTLIST pluginState
+	id    CDATA #REQUIRED
+	value (installed|activated) "installed">
+<!ELEMENT systemProperty EMPTY>
+<!ATTLIST systemProperty
+	name  CDATA #REQUIRED
+	value CDATA #REQUIRED>
+<!ELEMENT class (parameter*)>
+<!ATTLIST class
+	class CDATA #IMPLIED>
+<!ELEMENT parameter EMPTY>
+<!ATTLIST parameter
+	name  CDATA #REQUIRED
+	value CDATA #REQUIRED>

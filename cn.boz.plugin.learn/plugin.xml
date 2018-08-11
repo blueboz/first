@@ -5,13 +5,13 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="PLUGINDEV"
+            name="Blueboz"
             id="cn.boz.plugin.learn">
       </category>
       <view
             id="cn.boz.plugin.learn.views.AddressView"
             name="地址本视图"
-            icon="icons/sample.png"
+            icon="icons/full/obj16/add_obj.png"
             class="cn.boz.plugin.learn.views.AddressView"
             category="cn.boz.plugin.learn"
             inject="true">
@@ -39,12 +39,37 @@
          point="org.eclipse.ui.commands">
       <category
             id="cn.boz.plugin.learn.commands.category"
-            name="Sample Category">
+            name="自定义菜单">
       </category>
       <command
             categoryId="cn.boz.plugin.learn.commands.category"
             id="cn.boz.plugin.learn.commands.sampleCommand"
-            name="Sample Command">
+            name="可乐">
+      </command>
+      <command
+            categoryId="cn.boz.plugin.learn.commands.category"
+            id="cn.boz.plugin.learn.commands.sampleCommand2"
+            name="酸奶">
+      </command>
+      <command
+            categoryId="cn.boz.plugin.learn.commands.category"
+            id="cn.boz.plugin.learn.commands.sampleCommand3"
+            name="豆浆">
+      </command>
+      <command
+            categoryId="cn.boz.plugin.learn.commands.category"
+            id="cn.boz.plugin.learn.commands.sampleCommand4"
+            name="蔬菜">
+      </command>
+      <command
+            categoryId="cn.boz.plugin.learn.commands.category"
+            id="cn.boz.plugin.learn.commands.sampleCommand5"
+            name="黑芝麻">
+      </command>
+      <command
+            categoryId="cn.boz.plugin.learn.commands.category"
+            id="cn.boz.plugin.learn.commands.sampleCommand6"
+            name="苦瓜">
       </command>
    </extension>
    <extension
@@ -52,6 +77,26 @@
       <handler
             class="cn.boz.plugin.learn.actions.OpenAddressViewAction"
             commandId="cn.boz.plugin.learn.commands.sampleCommand">
+      </handler>
+      <handler
+            class="cn.boz.plugin.learn.actions.OpenAddressViewAction"
+            commandId="cn.boz.plugin.learn.commands.sampleCommand2">
+      </handler>
+      <handler
+            class="cn.boz.plugin.learn.actions.OpenAddressViewAction"
+            commandId="cn.boz.plugin.learn.commands.sampleCommand3">
+      </handler>
+      <handler
+            class="cn.boz.plugin.learn.actions.OpenAddressViewAction"
+            commandId="cn.boz.plugin.learn.commands.sampleCommand4">
+      </handler>
+      <handler
+            class="cn.boz.plugin.learn.actions.OpenAddressViewAction"
+            commandId="cn.boz.plugin.learn.commands.sampleCommand5">
+      </handler>
+      <handler
+            class="cn.boz.plugin.learn.actions.OpenAddressViewAction"
+            commandId="cn.boz.plugin.learn.commands.sampleCommand6">
       </handler>
    </extension>
    <!--extension
@@ -68,13 +113,42 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
+               icon="icons/office/c10.ico"
                id="cn.boz.plugin.learn.menus.sampleMenu"
-               label="Sample Menu"
+               label="我的工具"
                mnemonic="M">
             <command
                   commandId="cn.boz.plugin.learn.commands.sampleCommand"
+                  icon="icons/animal/b1.ico"
                   id="cn.boz.plugin.learn.menus.sampleCommand"
-                  mnemonic="S">
+                  mnemonic="S"
+                  tooltip="油炸油条又酥脆又好吃">
+            </command>
+            <command
+                  commandId="cn.boz.plugin.learn.commands.sampleCommand2"
+                  icon="icons/animal/b2.ico"
+                  id="cn.boz.plugin.learn.menus.sampleCommand2"
+                  mnemonic="S"
+                  tooltip="清蒸的">
+            </command>
+            <command
+                  commandId="cn.boz.plugin.learn.commands.sampleCommand3"
+                  icon="icons/animal/b3.ico"
+                  id="cn.boz.plugin.learn.menus.sampleCommand3"
+                  mnemonic="S"
+                  tooltip="麻辣的">
+            </command>
+         </menu>
+         <menu
+               icon="icons/office/c0.ico"
+               id="AddressBook"
+               label="地址本">
+			<command
+                  commandId="cn.boz.plugin.learn.commands.sampleCommand3"
+                  icon="icons/animal/b4.ico"
+                  id="cn.boz.plugin.learn.menus.sampleCommand3"
+                  mnemonic="S"
+                  tooltip="麻辣的">
             </command>
          </menu>
       </menuContribution>
@@ -83,17 +157,161 @@
          <toolbar
                id="cn.boz.plugin.learn.toolbars.sampleToolbar">
             <command
-                  commandId="cn.boz.plugin.learn.commands.sampleCommand"
-                  icon="icons/sample.png"
-                  id="cn.boz.plugin.learn.toolbars.sampleCommand"
-                  tooltip="Say hello world">
+                  commandId="cn.boz.plugin.learn.commands.sampleCommand4"
+                  icon="icons/cartoon/o1.ico"
+                  id="cn.boz.plugin.learn.toolbars.sampleCommand4"
+                  tooltip="MyUtils">
+            </command>
+            <command
+                  commandId="cn.boz.plugin.learn.commands.sampleCommand5"
+                  icon="icons/cartoon/o2.ico"
+                  id="cn.boz.plugin.learn.toolbars.sampleCommand5"
+                  tooltip="MyUtils">
+            </command>
+            <command
+                  commandId="cn.boz.plugin.learn.commands.sampleCommand6"
+                  icon="icons/cartoon/o3.ico"
+                  id="cn.boz.plugin.learn.toolbars.sampleCommand6"
+                  tooltip="MyUtils">
             </command>
          </toolbar>
       </menuContribution>
    </extension>
+	
    <extension
-         point="org.eclipse.ui.actionSets">
+         point="org.eclipse.ui.actionSets" >
+      <actionSet
+            id="cn.boz.plugin.learn.actionSet2"
+            label="地址本操作"
+            visible="true">
+         <menu
+               icon="icons/calendar/g11.ico"
+               id="AddressBookMenu"
+               label="地址本">
+            <separator
+                  name="content1">
+            </separator>
+            <separator
+                  name="content2">
+            </separator>
+            <separator
+                  name="seperator3">
+            </separator>
+            <groupMarker
+                  name="group1">
+            </groupMarker>
+         </menu>
+         <action
+               class="cn.boz.plugin.learn.actions.OpenViewHandlerDelegate"
+               icon="icons/emoji/b1.ico"
+               id="cn.boz.plugin.learn.action1"
+               label="打开视图"
+               menubarPath="AddressBookMenu/content1"
+               style="push"
+               toolbarPath="Normal/addition"
+               tooltip="此功能在jdk=56(12)才有效">
+            <enablement>
+               <and>
+                  <systemProperty
+                        name="java.class.version"
+                        value="56.0">
+                  </systemProperty>
+               </and>
+            </enablement>
+             
+         </action>
+         <action
+               class="cn.boz.plugin.learn.actions.MyWorkbenchWindowHandlerDelegate"
+               icon="icons/emoji/b2.ico"
+               id="cn.boz.plugin.learn.action1"
+               label="查看视图"
+               menubarPath="AddressBookMenu/content1"
+               style="push"
+               toolbarPath="Normal/addition">
+         </action>
+         <action
+               class="cn.boz.plugin.learn.actions.MyWorkbenchWindowHandlerDelegate"
+               icon="icons/emoji/b3.ico"
+               id="cn.boz.plugin.learn.action3"
+               label="编辑视图"
+               menubarPath="AddressBookMenu/content2"
+               style="push"
+               toolbarPath="Normal/addition">
+         </action>
+         <action
+               class="cn.boz.plugin.learn.actions.MyWorkbenchWindowHandlerDelegate"
+               icon="icons/emoji/b4.ico"
+               id="cn.boz.plugin.learn.action1"
+               label="更新视图"
+               menubarPath="AddressBookMenu/group1"
+               style="push"
+               toolbarPath="Normal/addition">
+         </action>
+         <action
+               class="cn.boz.plugin.learn.actions.MyWorkbenchWindowHandlerDelegate"
+               icon="icons/emoji/b5.ico"
+               id="cn.boz.plugin.learn.action1"
+               label="鞭策视图"
+               menubarPath="AddressBookMenu/group1"
+               style="push"
+               toolbarPath="Normal/addition">
+         </action>
+         <action
+               class="cn.boz.plugin.learn.actions.MyWorkbenchWindowHandlerDelegate"
+               icon="icons/emoji/b6.ico"
+               id="cn.boz.plugin.learn.action3"
+               label="克隆视图"
+               menubarPath="AddressBookMenu/group1"
+               style="push"
+               toolbarPath="Normal/addition">
+         </action>
+         <menu
+               icon="icons/metro/a4.ico"
+               id="SubAddressMenu"
+               label="子菜单"
+               path="AddressBookMenu/seperator3">
+            <separator
+                  name="subseperator1">
+            </separator>
+         </menu>
+         <action
+               class="cn.boz.plugin.learn.actions.MyWorkbenchWindowHandlerDelegate"
+               icon="icons/emoji/b7.ico"
+               id="cn.boz.plugin.learn.action3"
+               label="物理视图"
+               menubarPath="SubAddressMenu/subseperator1"
+               style="push">
+         </action>
+         <action
+               class="cn.boz.plugin.learn.actions.MyWorkbenchWindowHandlerDelegate"
+               icon="icons/emoji/b8.ico"
+               id="cn.boz.plugin.learn.action1"
+               label="物质视图"
+               menubarPath="SubAddressMenu/subseperator1"
+               style="push">
+         </action>
+      </actionSet>
+  </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="MyObjectContribution"
+            nameFilter="Three"
+            objectClass="java.lang.String">
+         <menu
+               icon="icons/icecream/b10.ico"
+               id="cn.boz.plugin.learn.menu1"
+               label="对象操作"
+               path="additions">
+         </menu>
+         <action
+               class="cn.boz.plugin.learn.Action1"
+               icon="icons/metro/a7.ico"
+               id="MyObjectAction"
+               label="对象操作实例"
+               tooltip="举例子说明如何添加对象操作">
+         </action>
+      </objectContribution>
    </extension>
-   
-
 </plugin>
