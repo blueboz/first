@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -32,6 +33,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -98,7 +100,64 @@ public class LayoutMain {
 		}
 		display.dispose();
 	}
+	
 	private void render() {
+		// TODO Auto-generated method stub
+
+	}
+	
+	/**
+	 * 一个Stack Layout最好的示例
+	 */
+	private void render14() {
+		var layout=new GridLayout(2,false);
+		shell.setLayout(layout);
+		var slayout=new StackLayout();
+		var comp=new Composite(shell, SWT.BORDER);
+		var gd=new GridData(GridData.FILL_BOTH);
+		gd.horizontalSpan=2;
+		comp.setLayout(slayout);
+		comp.setLayoutData(gd);
+		var text=new Text(comp,SWT.NONE);
+		text.setText("文本");
+		var btn=new Button(comp, SWT.NONE);
+		btn.setText("按钮");
+		var btn2=new Button(shell, SWT.NONE);
+		btn2.setText("单击显示文本");
+		var btn3=new Button(shell, SWT.NONE);
+		btn3.setText("单击显示按钮");
+		btn2.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				slayout.topControl=text;
+				comp.layout();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		btn3.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				slayout.topControl=btn;
+				comp.layout();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
+	}
+	
+	private void render13() {
 		var layout = new FillLayout();
 		shell.setLayout(layout);
 		var mm=new MenuManager();

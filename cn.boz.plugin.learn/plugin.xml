@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="Blueboz"
+            name="General"
             id="cn.boz.plugin.learn">
       </category>
       <view
@@ -15,6 +15,12 @@
             class="cn.boz.plugin.learn.views.AddressView"
             category="cn.boz.plugin.learn"
             inject="true">
+      </view>
+      <view
+            class="cn.boz.plugin.learn.base.ViewPart1"
+            id="cn.boz.plugin.learn.view1"
+            name="name"
+            restorable="true">
       </view>
    </extension>
    <extension
@@ -70,6 +76,17 @@
             categoryId="cn.boz.plugin.learn.commands.category"
             id="cn.boz.plugin.learn.commands.sampleCommand6"
             name="苦瓜">
+      </command>
+      <category
+            description="地址本插件添加的命令"
+            id="MyCategory1"
+            name="地址本">
+      </category>
+      <command
+            categoryId="MyCategory1"
+            description="打开地址本视图"
+            id="OpenAddressBook"
+            name="打开地址本">
       </command>
    </extension>
    <extension
@@ -203,6 +220,7 @@
          </menu>
          <action
                class="cn.boz.plugin.learn.actions.OpenViewHandlerDelegate"
+               definitionId="OpenAddressBook"
                icon="icons/emoji/b1.ico"
                id="cn.boz.plugin.learn.action1"
                label="打开视图"
@@ -297,21 +315,122 @@
       <objectContribution
             adaptable="false"
             id="MyObjectContribution"
-            nameFilter="Three"
-            objectClass="java.lang.String">
+            nameFilter="*.java"
+            objectClass="java.lang.Object">
          <menu
                icon="icons/icecream/b10.ico"
-               id="cn.boz.plugin.learn.menu1"
+               id="MyOMenu"
                label="对象操作"
                path="additions">
+            <separator
+                  name="mysep">
+            </separator>
          </menu>
          <action
-               class="cn.boz.plugin.learn.Action1"
+               class="cn.boz.plugin.learn.actions.MyObjectAction"
+               enablesFor="1"
                icon="icons/metro/a7.ico"
                id="MyObjectAction"
                label="对象操作实例"
+               menubarPath="MyOMenu/mysep"
                tooltip="举例子说明如何添加对象操作">
          </action>
       </objectContribution>
+      <viewerContribution
+            id="MyViewContribution"
+            targetID="cn.boz.plugin.learn.views.AddressView">
+         <menu
+               icon="icons/food/h11.ico"
+               id="MyViewMenu"
+               label="视图菜单"
+               path="viewmenu">
+            <separator
+                  name="viewmSep">
+            </separator>
+         </menu>
+         <action
+               class="cn.boz.plugin.learn.actions.MyViewAction"
+               enablesFor="+"
+               icon="icons/food/h5.ico"
+               id="cn.boz.plugin.learn.action2"
+               label="视图工具1"
+               menubarPath="MyViewMenu/viewmSep">
+         </action>
+      </viewerContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="MyViewAction"
+            targetID="#TextEditorContext">
+         <menu
+               icon="icons/earth/e14.ico"
+               id="cn.boz.plugin.learn.menu1"
+               label="小菜单">
+            <separator
+                  name="sep">
+            </separator>
+         </menu>
+         <action
+               class="cn.boz.plugin.learn.actions.MyViewAction"
+               icon="icons/food/h4.ico"
+               id="cn.boz.plugin.learn.action1"
+               label="小油条"
+               menubarPath="cn.boz.plugin.learn.menu1/sep"
+               style="push">
+         </action>
+      </viewContribution>
+      <viewContribution
+            id="MyViewAction2"
+            targetID="cn.boz.plugin.learn.views.AddressView">
+         <menu
+               icon="icons/earth/e14.ico"
+               id="cn.boz.plugin.learn.menu2"
+               label="小视图菜单">
+            <separator
+                  name="sep">
+            </separator>
+         </menu>
+         <action
+               class="cn.boz.plugin.learn.actions.MyViewAction"
+               icon="icons/food/h4.ico"
+               id="cn.boz.plugin.learn.action2"
+               label="小视图油条"
+               menubarPath="cn.boz.plugin.learn.menu2/sep"
+               style="push">
+         </action>
+      </viewContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            id="MyEditorContribution"
+            targetID="org.eclipse.ui.DefaultTextEditor">
+         <menu
+               icon="icons/emoji/b13.ico"
+               id="cn.boz.defaultEditorMenu"
+               label="自定义菜单">
+            <separator
+                  name="sep">
+            </separator>
+         </menu>
+         <action
+               class="cn.boz.plugin.learn.actions.MyEditorAction"
+               icon="icons/emoji/b6.ico"
+               id="cn.boz.defaultEditorMenuAction"
+               label="自定义Action"
+               menubarPath="cn.boz.defaultEditorMenu/sep"
+               style="push">
+         </action>
+      </editorContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="OpenAddressBook"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+SHIFT+V">
+      </key>
    </extension>
 </plugin>
