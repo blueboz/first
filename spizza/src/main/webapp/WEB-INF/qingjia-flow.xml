@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+
+    <!--初始化一个空的请假单，作为流程流转过程中使用-->
+    <var name="qingjiadan" class="com.pizza.domain.Qingjiadan"></var>
+
+    <view-state id="qingjia" view="flow/qingjia.jsp" model="qingjiadan">
+        <transition to="temp"></transition>
+    </view-state>
+
+    <action-state id="temp">
+        <evaluate result="qingjiadan" expression="qingjiaController.processQingjiadan(flowScope.qingjiadan)"></evaluate>
+        <transition to="zzsp"></transition>
+    </action-state>
+
+    <view-state id="zzsp" view="flow/zzsp.jsp" >
+        <transition to="bzsp"></transition>
+    </view-state>
+    <view-state id="bzsp" view="flow/bzsp.jsp" >
+        <transition to="bzrsp"></transition>
+    </view-state>
+
+    <view-state id="bzrsp" view="flow/bzrsp.jsp">
+        <transition to="finally"></transition>
+    </view-state>
+
+    <end-state id="finally" view="flow/finally.jsp"></end-state>
+
+</flow>

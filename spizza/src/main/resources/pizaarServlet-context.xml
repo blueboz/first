@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:flow="http://www.springframework.org/schema/webflow-config"
+    xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+    http://www.springframework.org/schema/webflow-config 
+    http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
+ 
+
+	<!-- flow-executor流程执行器 -->
+	<flow:flow-executor id="flowExecutor" flow-registry="flowRegistry"/>
+
+
+	<!-- 流程注册表 -->
+	<flow:flow-registry id="flowRegistry">
+		<flow:flow-location path="/WEB-INF/pizza-flow.xml" id="pizza"/>
+		<flow:flow-location path="/WEB-INF/customer-flow.xml" id="customer"/>
+		<flow:flow-location path="/WEB-INF/order-flow.xml" id="order"/>
+		<flow:flow-location path="/WEB-INF/payment-flow.xml" id="payment"/>
+        <flow:flow-location path="/WEB-INF/qingjia-flow.xml" id="qingjia"/>
+	</flow:flow-registry>
+	
+	<!-- 定义HandlerMapping -->
+	<bean id="handlerMapping" class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+		<property name="flowRegistry" ref="flowRegistry"/>
+	</bean>
+	
+	<!-- 定义HandlerAdapter -->
+	<bean id="handlerAdapter" class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+		<property name="flowExecutor" ref="flowExecutor"/>
+	</bean>
+</beans>
