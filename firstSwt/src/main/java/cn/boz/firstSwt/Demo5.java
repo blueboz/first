@@ -4,17 +4,22 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 
 public class Demo5 {
@@ -84,6 +89,7 @@ public class Demo5 {
 				public void widgetSelected(SelectionEvent evt) {
 					int selectionIndex = list.getSelectionIndex();
 					stackLayout.topControl=lists.get(selectionIndex);
+					composite.layout();
 				}
 				
 				@Override
@@ -97,7 +103,7 @@ public class Demo5 {
 			GridData gridData = new GridData(GridData.FILL_BOTH);
 			gridData.horizontalSpan = 4;
 			composite.setLayoutData(gridData);
-			StackLayout stackLayout = new StackLayout();
+			stackLayout = new StackLayout();
 			composite.setLayout(stackLayout);
 			comp1Content();
 			comp2Content();
@@ -109,7 +115,7 @@ public class Demo5 {
 			lists.add(comp3);
 			lists.add(comp4);
 			lists.add(comp5);
-			stackLayout.topControl = comp1;
+			stackLayout.topControl = comp4;
 		}
 		{
 			Button button = new Button(shell, SWT.NONE);
@@ -127,6 +133,13 @@ public class Demo5 {
 			gridData2.horizontalSpan = 1;
 			gridData2.widthHint = 90;
 			button2.setLayoutData(gridData2);
+			button2.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					shell.close();
+					super.widgetSelected(e);
+				}
+			});
 
 			Button button3 = new Button(shell, SWT.NONE);
 			button3.setText("取消");
@@ -328,14 +341,51 @@ public class Demo5 {
 		comp3 = new Composite(composite, SWT.BORDER);
 		comp3.setLayout(new GridLayout());
 		final Label labelRefuse = new Label(comp3, SWT.NONE);
-		labelRefuse.setText(" 被拒 ");
+		labelRefuse.setText("被拒 ");
+		//new Scale(comp3, SWT.BORDER);
+		var scale=new Scale(comp3, SWT.HORIZONTAL);
+		//new Scale(comp3, SWT.VERTICAL);
+		//new Label(parent, style)
+		var label = new Label(comp3, SWT.BORDER);
+		GridData gridData = new GridData();
+		gridData.widthHint=160;
+		label.setLayoutData(gridData);
+		label.setBackground(display.getSystemColor(SWT.COLOR_CYAN));
+		label.setText("音量");
+		scale.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int val = scale.getSelection();
+				label.setText("音量"+val+"");
+				super.widgetSelected(e);
+			}
+		});
+
 	}
 
 	private void comp4Content() {
 		comp4 = new Composite(composite, SWT.BORDER);
-		comp4.setLayout(new GridLayout());
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns=3;
+		comp4.setLayout(gridLayout);
 		final Label labelNotice = new Label(comp4, SWT.NONE);
 		labelNotice.setText(" 通知 ");
+		ExpandBar expandBar = new ExpandBar(comp4, SWT.NONE);
+		ExpandItem expandItem = new ExpandItem(expandBar, SWT.NONE);
+		ExpandItem expandItem2 = new ExpandItem(expandBar, SWT.NONE);
+
+		Composite composite2 = new Composite(expandBar, SWT.NONE);
+		composite2.setLayout(new FillLayout());
+		Label label = new Label(composite2, SWT.NONE);
+		label.setText("标签");
+		expandItem.setHeight(120);
+		expandItem.setControl(composite2);
+
+		GridData gridData = new GridData();
+		gridData.widthHint=220;
+		gridData.heightHint=500;
+		expandBar.setLayoutData(gridData);
+
 	}
 
 	private void comp5Content() {
