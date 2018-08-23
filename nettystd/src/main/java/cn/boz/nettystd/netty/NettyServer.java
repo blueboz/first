@@ -1,4 +1,5 @@
 package cn.boz.nettystd.netty;
+
 import cn.boz.nettystd.netty.handler.ServerHandler;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -28,16 +29,19 @@ public class NettyServer {
 
 						@Override
 						protected void initChannel(Channel ch) throws Exception {
+							// ChannelInBoundHandler是按照注册顺序进行执行的
+							// ChannelOutBoundHandler是按照注册逆序执行的
 							ch.pipeline().addLast(new ServerHandler());
+
 						}
 					});
 
 			ChannelFuture chf = serverBootstrap.bind().sync();
-			System.out.println("��ʼ����,�˿�Ϊ" + chf.channel().localAddress());
+			System.out.println("开始监听,端口为" + chf.channel().localAddress());
 			chf.channel().closeFuture().sync();
 		} catch (Exception e) {
 			evg.shutdownGracefully().sync();
-		}finally {
+		} finally {
 			evg.shutdownGracefully().sync();
 		}
 
@@ -47,4 +51,3 @@ public class NettyServer {
 		new NettyServer(7890).start();
 	}
 }
-

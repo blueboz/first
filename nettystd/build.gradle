@@ -15,6 +15,7 @@ repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    
 }
 
 dependencies {
@@ -47,3 +48,10 @@ dependencies {
 project.sourceCompatibility=1.10
 
 project.targetCompatibility=1.10
+
+buildscript {
+	repositories{
+		mavenLocal()
+	}
+	repositories.mavenLocal();
+}
