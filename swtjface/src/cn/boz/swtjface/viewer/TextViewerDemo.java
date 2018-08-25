@@ -1,5 +1,6 @@
-package cn.boz.swtjface;
+package cn.boz.swtjface.viewer;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.eclipse.jface.text.Document;
@@ -9,12 +10,13 @@ import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-public class ViewerDemo {
+public class TextViewerDemo {
 	private int dw = 0;
 	private int dh = 0;
 	private int sw = 0;
@@ -22,11 +24,11 @@ public class ViewerDemo {
 	private double dlgwp = .6;
 	private double dlghp = .6;
 	protected Shell shell;
-	private Display display;
+	protected Display display;
 
 	public static void main(String[] args) {
 		Logger.getLogger("jj");
-		ViewerDemo app = new ViewerDemo();
+		TextViewerDemo app = new TextViewerDemo();
 		app.start();
 	}
 
@@ -62,10 +64,26 @@ public class ViewerDemo {
 		lineCol.setBackground(display.getSystemColor(SWT.COLOR_CYAN));
 		ruler.addDecorator(0, lineCol);
 
-		SourceViewer sourceViewer = new SourceViewer(sashForm, ruler, SWT.BORDER|SWT.V_SCROLL);
+		SourceViewer sourceViewer = new SourceViewer(sashForm, ruler, SWT.BORDER|SWT.V_SCROLL|SWT.H_SCROLL);
 		Document document = new Document();
 		sourceViewer.setDocument(document);
+		TextViewer text = new TextViewer(sashForm, SWT.BORDER|SWT.MULTI|SWT.V_SCROLL);
+		text.setDocument(document);
+		StyledText textWidget = text.getTextWidget();
+		textWidget.setWordWrap(true);
+		textWidget.setBackground(display.getSystemColor(SWT.COLOR_BLACK));
+		textWidget.setForeground(display.getSystemColor(SWT.COLOR_WHITE));
+		sashForm.setWeights(new int[] {2,1});
 		
+		
+		byte[] bs;
+		try {
+			bs = this.getClass().getResourceAsStream("TextViewerDemo.class").readAllBytes();
+			document.set(new String(bs,"UTF-8"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
