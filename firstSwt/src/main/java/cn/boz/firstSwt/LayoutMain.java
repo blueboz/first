@@ -64,8 +64,8 @@ public class LayoutMain {
 	private int dh = 0;
 	private int sw = 0;
 	private int sh = 0;
-	private double dlgwp = .18;
-	private double dlghp = .3;
+	private double dlgwp = .5;
+	private double dlghp = .5;
 	protected Shell shell;
 	private Display display;
 
@@ -102,6 +102,8 @@ public class LayoutMain {
 	}
 	
 	private void render() {
+		var layout = new GridLayout();
+		
 		// TODO Auto-generated method stub
 
 	}

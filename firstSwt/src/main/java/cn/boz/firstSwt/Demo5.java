@@ -1,8 +1,11 @@
 package cn.boz.firstSwt;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -10,6 +13,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -19,8 +23,11 @@ import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 
 public class Demo5 {
 	private int dw = 0;
@@ -115,7 +122,7 @@ public class Demo5 {
 			lists.add(comp3);
 			lists.add(comp4);
 			lists.add(comp5);
-			stackLayout.topControl = comp4;
+			stackLayout.topControl = comp5;
 		}
 		{
 			Button button = new Button(shell, SWT.NONE);
@@ -390,8 +397,27 @@ public class Demo5 {
 
 	private void comp5Content() {
 		comp5 = new Composite(composite, SWT.BORDER);
-		comp5.setLayout(new GridLayout());
-		final Label labelLink = new Label(comp5, SWT.NONE);
-		labelLink.setText(" ¡¥Ω” ");
+		comp5.setLayout(new FillLayout());
+		TabFolder tabFolder = new TabFolder(comp5, SWT.BOTTOM|SWT.BORDER);
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Item1");
+		TabItem tabItem2 = new TabItem(tabFolder, SWT.NONE);
+		tabItem2.setText("Item2");
+		TabItem tabItem3 = new TabItem(tabFolder, SWT.NONE);
+		tabItem3.setText("Item2");
+		{
+			Composite comp1 = new Composite(tabFolder, SWT.BORDER);
+			tabItem.setControl(comp1);
+			comp1.setLayout(new RowLayout());
+			new ProgressBar(comp1, SWT.INDETERMINATE);
+		}
+		
+		CTabFolder cTabFolder = new CTabFolder(comp5, SWT.None);
+		
+		IntStream.range(1, 10).forEach(it->{
+			CTabItem cTabItem = new CTabItem(cTabFolder, SWT.CLOSE);
+			cTabItem.setText("±Í«©"+it);
+		});
+		
 	}
 }
