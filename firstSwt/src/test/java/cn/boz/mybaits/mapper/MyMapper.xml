@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.boz.mybaits.mapper.MyMapper">
+
+	<resultMap id="BaseResultMap"
+		type="cn.boz.domain.pojo.ActReProcdef">
+		<result column="ID_" jdbcType="VARCHAR" property="id" />
+		<result column="REV_" jdbcType="INTEGER" property="rev" />
+		<result column="CATEGORY_" jdbcType="VARCHAR"
+			property="category" />
+		<result column="NAME_" jdbcType="VARCHAR" property="name" />
+		<result column="KEY_" jdbcType="VARCHAR" property="key" />
+		<result column="VERSION_" jdbcType="INTEGER" property="version" />
+		<result column="DEPLOYMENT_ID_" jdbcType="VARCHAR"
+			property="deploymentId" />
+		<result column="RESOURCE_NAME_" jdbcType="VARCHAR"
+			property="resourceName" />
+		<result column="DGRM_RESOURCE_NAME_" jdbcType="VARCHAR"
+			property="dgrmResourceName" />
+		<result column="DESCRIPTION_" jdbcType="VARCHAR"
+			property="description" />
+		<result column="HAS_START_FORM_KEY_" jdbcType="TINYINT"
+			property="hasStartFormKey" />
+		<result column="HAS_GRAPHICAL_NOTATION_" jdbcType="TINYINT"
+			property="hasGraphicalNotation" />
+		<result column="SUSPENSION_STATE_" jdbcType="INTEGER"
+			property="suspensionState" />
+		<result column="TENANT_ID_" jdbcType="VARCHAR"
+			property="tenantId" />
+	</resultMap>
+	<!-- 
+		使用mapper代理，首先是注册xml文件 
+		其次是sqlSession.getMapper得到动态代理
+		接下来就可以直接使用
+	-->
+	<select id="findProcDefById" parameterType="string"
+		resultMap="BaseResultMap">
+		SELECT * FROM act_re_procdef WHERE id_=#{id}
+	</select>
+</mapper>
