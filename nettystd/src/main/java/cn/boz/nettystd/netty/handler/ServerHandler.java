@@ -10,6 +10,9 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class ServerHandler extends ChannelInboundHandlerAdapter  {
 
 
+	/**
+	 * 需要知道msg 是进来的，尔
+	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		System.out.println("Server 读取数据中");
