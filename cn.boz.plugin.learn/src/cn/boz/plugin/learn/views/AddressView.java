@@ -69,9 +69,9 @@ public class AddressView extends ViewPart {
 	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
 		@Override
 		public String getColumnText(Object obj, int index) {
-			Object[] arr=(Object[]) obj;
-			if(arr.length>index) {
-				return (String)arr[index];
+			Object[] arr = (Object[]) obj;
+			if (arr.length > index) {
+				return (String) arr[index];
 			}
 			return "";
 		}
@@ -85,7 +85,8 @@ public class AddressView extends ViewPart {
 		public Image getImage(Object obj) {
 			return workbench.getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
 		}
-	} 
+	}
+
 	TableColumn tc;
 	TableColumn tc2;
 	TableColumn tc3;
@@ -95,23 +96,22 @@ public class AddressView extends ViewPart {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 
 		Table table = viewer.getTable();
-		tc=new TableColumn(table, SWT.None);
+		tc = new TableColumn(table, SWT.None);
 		table.setHeaderVisible(true);
 		tc.setText("ÐÕÃû");
 		tc.setWidth(120);
-		var tc2=new TableColumn(table, SWT.None);
+		tc2 = new TableColumn(table, SWT.None);
 		tc2.setText("ÄêÁä");
 		tc2.setWidth(120);
-		var tc3=new TableColumn(table, SWT.None);
+		tc3 = new TableColumn(table, SWT.None);
 		tc3.setText("×¡Ö·");
 		tc3.setWidth(120);
 		table.setLinesVisible(true);
 
-		var avcp=new AddressViewContentProvider();
+		var avcp = new AddressViewContentProvider();
 		viewer.setContentProvider(avcp);
 		viewer.setInput(AddressManager.getManager());
 		viewer.setLabelProvider(new AddressViewLabelProvider());
-		
 
 		// Create the help context id for the viewer's control
 		workbench.getHelpSystem().setHelp(viewer.getControl(), "cn.boz.plugin.learn.viewer");
@@ -125,11 +125,18 @@ public class AddressView extends ViewPart {
 	}
 
 	private void createTableSorter() {
-		Comparator<AddressItem> nc=(AddressItem ai1,AddressItem ai2)->{return ai1.getName().compareTo(ai2.getName());};
-		Comparator<AddressItem> cc=(AddressItem ai1,AddressItem ai2)->{return ai1.getCategory().compareTo(ai2.getCategory());};
-		Comparator<AddressItem> mc=(AddressItem ai1,AddressItem ai2)->{return ai1.getMessageInfo().compareTo(ai2.getMessageInfo());};
-		var cs=new Comparator[] {nc,cc,mc};
-		var sorter=new AddressViewSorter(viewer, new TableColumn[] {tc,tc2,tc3},new Comparator[] {nc,cc,mc} );
+		Comparator<AddressItem> nc = (AddressItem ai1, AddressItem ai2) -> {
+			return ai1.getName().compareTo(ai2.getName());
+		};
+		Comparator<AddressItem> cc = (AddressItem ai1, AddressItem ai2) -> {
+			return ai1.getCategory().compareTo(ai2.getCategory());
+		};
+		Comparator<AddressItem> mc = (AddressItem ai1, AddressItem ai2) -> {
+			return ai1.getMessageInfo().compareTo(ai2.getMessageInfo());
+		};
+		var cs = new Comparator[] { nc, cc, mc };
+		var ts = new TableColumn[] { tc, tc2, tc3 };
+		var sorter = new AddressViewSorter(viewer, ts, cs);
 		viewer.setComparator(sorter);
 	}
 

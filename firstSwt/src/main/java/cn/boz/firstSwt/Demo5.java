@@ -47,7 +47,7 @@ public class Demo5 {
 	private void start() {
 		display = new Display();
 		shell = new Shell(display);
-		shell.setText("¶Ô»°¿ò");
+		shell.setText("å¯¹è¯æ¡†");
 		var ca = display.getClientArea();
 		dh = ca.height;
 		dw = ca.width;
@@ -80,11 +80,11 @@ public class Demo5 {
 
 	private void render() {
 		final var display = Display.getDefault();
-		shell.setText("GoogleTalkÉèÖÃ¶Ô»°¿òÊµÀý ");
+		shell.setText("GoogleTalkè®¾ç½®å¯¹è¯æ¡†å®žä¾‹ ");
 		shell.setLayout(new GridLayout(7, false));
 		{
 			list = new List(shell, SWT.BORDER);
-			list.setItems(new String[] { "³£¹æ", "ÒôÆµ", "±»¾Ü", "Í¨Öª", "Á´½Ó" });
+			list.setItems(new String[] { "å¸¸è§„", "éŸ³é¢‘", "è¢«æ‹’", "é€šçŸ¥", "é“¾æŽ¥" });
 			var gd = new GridData(GridData.FILL_VERTICAL);
 			gd.horizontalSpan = 3;
 			gd.widthHint = 140;
@@ -126,7 +126,7 @@ public class Demo5 {
 		}
 		{
 			Button button = new Button(shell, SWT.NONE);
-			button.setText("°ïÖú");
+			button.setText("å¸®åŠ©");
 			GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, true, false);
 			gridData.horizontalSpan = 5;
 			gridData.widthHint = 90;
@@ -134,7 +134,7 @@ public class Demo5 {
 			button.setLayoutData(gridData);
 
 			Button button2 = new Button(shell, SWT.NONE);
-			button2.setText("È·¶¨");
+			button2.setText("ç¡®å®š");
 			GridData gridData2 = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
 			gridData2.horizontalIndent = 5;
 			gridData2.horizontalSpan = 1;
@@ -149,7 +149,7 @@ public class Demo5 {
 			});
 
 			Button button3 = new Button(shell, SWT.NONE);
-			button3.setText("È¡Ïû");
+			button3.setText("å–æ¶ˆ");
 			GridData gridData3 = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
 			gridData3.horizontalIndent = 5;
 			gridData3.horizontalSpan = 1;
@@ -159,76 +159,76 @@ public class Demo5 {
 	}
 
 	private void comp1Content() {
-		// ÔÚ composite Ãæ°åÉÏ¶¨Òå comp1 Ãæ°å
+		// åœ¨ composite é¢æ¿ä¸Šå®šä¹‰ comp1 é¢æ¿
 		comp1 = new Composite(composite, SWT.BORDER);
-		// ÔÚ comp1 ÉÏ²ÉÓÃ GridLayout ²¼¾Ö£¬½« comp1 ÈÝÆ÷ÉèÖÃ 5 ÁÐ
+		// åœ¨ comp1 ä¸Šé‡‡ç”¨ GridLayout å¸ƒå±€ï¼Œå°† comp1 å®¹å™¨è®¾ç½® 5 åˆ—
 		comp1.setLayout(new GridLayout(5, false));
-		// ¶¨Òå³£¹æ±êÇ©£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		// å®šä¹‰å¸¸è§„æ ‡ç­¾ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 		{
 			final Label labRoutine = new Label(comp1, SWT.NONE);
-			labRoutine.setText(" ³£¹æ ");
-			// ÓÃ GridData ¶Ô labRoutine ½øÐÐ²¼¾Ö
+			labRoutine.setText(" å¸¸è§„ ");
+			// ç”¨ GridData å¯¹ labRoutine è¿›è¡Œå¸ƒå±€
 			GridData gridRoutine = new GridData();
 			gridRoutine.horizontalSpan = 2;
-			// ¾àÀë comp1 ¶¥¶Ë 10 ¸öÏñËØ
+			// è·ç¦» comp1 é¡¶ç«¯ 10 ä¸ªåƒç´ 
 			gridRoutine.verticalIndent = 10;
 			labRoutine.setLayoutData(gridRoutine);
 		}
-		// ¶¨Òå labSeparator ·Ö¸ô·û±êÇ©£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		// å®šä¹‰ labSeparator åˆ†éš”ç¬¦æ ‡ç­¾ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 		{
 			final Label labSeparator = new Label(comp1, SWT.SEPARATOR | SWT.HORIZONTAL);
 			GridData gridSeparator = new GridData(GridData.FILL_HORIZONTAL);
 			gridSeparator.horizontalSpan = 5;
-			// ´¹Ö±ÇÀÕ¼ 5 ÁÐ
+			// åž‚ç›´æŠ¢å  5 åˆ—
 			gridSeparator.verticalSpan = 5;
 			labSeparator.setLayoutData(gridSeparator);
 		}
-		// ¶¨Òå button1 ¡¢ button2 ¸´Ñ¡¿ò°´Å¥£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		// å®šä¹‰ button1 ã€ button2 å¤é€‰æ¡†æŒ‰é’®ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 		{
 
 			GridData gridButton = new GridData(GridData.FILL_HORIZONTAL);
-			// Ë®Æ½ÇÀÕ¼ 5 ÁÐ
+			// æ°´å¹³æŠ¢å  5 åˆ—
 			gridButton.horizontalSpan = 5;
-			// ´¹Ö±ÇÀÕ¼ 5 ÁÐ
+			// åž‚ç›´æŠ¢å  5 åˆ—
 			gridButton.verticalSpan = 5;
-			// ¾àÀë comp1 ×ó±ß¿ò 20 ¸öÏñËØ
+			// è·ç¦» comp1 å·¦è¾¹æ¡† 20 ä¸ªåƒç´ 
 			gridButton.horizontalIndent = 20;
 			final Button button1 = new Button(comp1, SWT.CHECK);
-			button1.setText(" Æô¶¯ Windows »á×Ô¶¯ÔËÐÐ (&S)");
-			// ¶Ô button1 ½øÐÐ²¼¾Ö
+			button1.setText(" å¯åŠ¨ Windows ä¼šè‡ªåŠ¨è¿è¡Œ (&S)");
+			// å¯¹ button1 è¿›è¡Œå¸ƒå±€
 			button1.setLayoutData(gridButton);
-			// ¶¨Òå button2 ¸´Ñ¡¿ò°´Å¥£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+			// å®šä¹‰ button2 å¤é€‰æ¡†æŒ‰é’®ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 			final Button button2 = new Button(comp1, SWT.CHECK);
-			button2.setText(" µ¥»÷µç×ÓÓÊ¼þÁ´½ÓÊ±´ò¿ª Gmail(&O)");
+			button2.setText(" å•å‡»ç”µå­é‚®ä»¶é“¾æŽ¥æ—¶æ‰“å¼€ Gmail(&O)");
 
 			button2.setLayoutData(gridButton);
 		}
-		// ¶¨Òå Group ·Ö×é¿ò£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		// å®šä¹‰ Group åˆ†ç»„æ¡†ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 		{
 			final Group group = new Group(comp1, SWT.NONE);
-			group.setText(" ºÃÓÑÁÐ±í ");
+			group.setText(" å¥½å‹åˆ—è¡¨ ");
 			GridData gridGroup = new GridData(GridData.FILL_HORIZONTAL);
 			gridGroup.horizontalSpan = 3;
 			gridGroup.verticalSpan = 5;
 			gridGroup.horizontalIndent = 20;
 			group.setLayoutData(gridGroup);
-			// ÉèÖÃ group ·Ö×é¿òÉÏ×é¼þ , ²¢¶Ô×é¼þ½øÐÐ²¼¾Ö
+			// è®¾ç½® group åˆ†ç»„æ¡†ä¸Šç»„ä»¶ , å¹¶å¯¹ç»„ä»¶è¿›è¡Œå¸ƒå±€
 			{
 				group.setLayout(new GridLayout());
 				GridData gridDataButton = new GridData(GridData.FILL_HORIZONTAL);
 				gridDataButton.verticalSpan = 6;
 				gridDataButton.horizontalIndent = 6;
 				final Button buttonOne = new Button(group, SWT.CHECK);
-				buttonOne.setText(" °´ÐÕÃûÅÅÁÐ (&N)");
+				buttonOne.setText(" æŒ‰å§“åæŽ’åˆ— (&N)");
 				buttonOne.setLayoutData(gridDataButton);
 				final Button buttonTwo = new Button(group, SWT.CHECK);
-				buttonTwo.setText(" Òþ²ØÀëÏßºÃÓÑ (&H)");
+				buttonTwo.setText(" éšè—ç¦»çº¿å¥½å‹ (&H)");
 				buttonTwo.setLayoutData(gridDataButton);
 				final Button buttonThree = new Button(group, SWT.CHECK);
-				buttonThree.setText(" Òþ²ØºÃÓÑÁÐ±íÒÔÍâµÄ Gmail ÁªÏµÈË (&C)");
+				buttonThree.setText(" éšè—å¥½å‹åˆ—è¡¨ä»¥å¤–çš„ Gmail è”ç³»äºº (&C)");
 				buttonThree.setLayoutData(gridDataButton);
 				final Button buttonFour = new Button(group, SWT.CHECK);
-				buttonFour.setText(" ½«¾­³£Í¨Ñ¶µÄÈË¼ÓÈëºÃÓÑÁÐ±í (&A))");
+				buttonFour.setText(" å°†ç»å¸¸é€šè®¯çš„äººåŠ å…¥å¥½å‹åˆ—è¡¨ (&A))");
 				buttonFour.setLayoutData(gridDataButton);
 			}
 		}
@@ -240,15 +240,15 @@ public class Demo5 {
 			gridDataButton.horizontalIndent = 20;
 			gridDataButton.widthHint = 120;
 			final Button buttonModify = new Button(comp1, SWT.NONE);
-			buttonModify.setText(" ¸ü¸Ä×ÖÌå (&F)...");
+			buttonModify.setText(" æ›´æ”¹å­—ä½“ (&F)...");
 			buttonModify.setLayoutData(gridDataButton);
 			final Button buttonAccount = new Button(comp1, SWT.NONE);
-			buttonAccount.setText(" ÕË»§ÉèÖÃ ...");
+			buttonAccount.setText(" è´¦æˆ·è®¾ç½® ...");
 			buttonAccount.setLayoutData(gridDataButton);
 		}
-		{ // ÔÚ comp1 ÉÏ¶¨Òå ¡° ÆôÓÃÕï¶Ï¼ÇÂ¼ ¡± °´Å¥£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		{ // åœ¨ comp1 ä¸Šå®šä¹‰ â€œ å¯ç”¨è¯Šæ–­è®°å½• â€ æŒ‰é’®ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 			final Button buttonDiagnose = new Button(comp1, SWT.NONE);
-			buttonDiagnose.setText(" ÆôÓÃÕï¶Ï¼ÇÂ¼ (&E)");
+			buttonDiagnose.setText(" å¯ç”¨è¯Šæ–­è®°å½• (&E)");
 			GridData gridDiagnose = new GridData();
 			gridDiagnose.horizontalSpan = 5;
 			gridDiagnose.verticalIndent = 20;
@@ -261,53 +261,53 @@ public class Demo5 {
 	private void comp2Content() {
 		comp2 = new Composite(composite, SWT.BORDER);
 		comp2.setLayout(new GridLayout());
-		// ¶¨ÒåÒôÆµ±êÇ©£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		// å®šä¹‰éŸ³é¢‘æ ‡ç­¾ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 		{
 			final Label labelAudio = new Label(comp2, SWT.NONE);
-			labelAudio.setText(" ÒôÆµ ");
+			labelAudio.setText(" éŸ³é¢‘ ");
 			GridData gridAudio = new GridData();
 			gridAudio.verticalIndent = 10;
 			labelAudio.setLayoutData(gridAudio);
 		}
-		// ÉèÖÃ comp2 Ãæ°åÉÏµÄ·Ö¸ô·û±êÇ©
+		// è®¾ç½® comp2 é¢æ¿ä¸Šçš„åˆ†éš”ç¬¦æ ‡ç­¾
 		{
 			final Label labelSeparator = new Label(comp2, SWT.SEPARATOR | SWT.HORIZONTAL);
 			GridData gridSeparator = new GridData(GridData.FILL_HORIZONTAL);
 			gridSeparator.verticalSpan = 5;
 			labelSeparator.setLayoutData(gridSeparator);
 		}
-		// ÔÚ comp2 ÉÏ¶¨Òå groupOne ·Ö×é¿ò£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		// åœ¨ comp2 ä¸Šå®šä¹‰ groupOne åˆ†ç»„æ¡†ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 		{
 			Group groupOne = new Group(comp2, SWT.NONE);
-			groupOne.setText(" ÊäÈë¡ªÂó¿Ë·ç»ò¶úÂó ");
+			groupOne.setText(" è¾“å…¥â€•éº¦å…‹é£Žæˆ–è€³éº¦ ");
 			GridData gridGroupOne = new GridData(GridData.FILL_HORIZONTAL);
 			gridGroupOne.horizontalIndent = 20;
 			gridGroupOne.verticalSpan = 20;
 			groupOne.setLayoutData(gridGroupOne);
-			{ // ÉèÖÃ groupa Ãæ°åÉÏ×é¼þµÄ²¼¾Ö
+			{ // è®¾ç½® groupa é¢æ¿ä¸Šç»„ä»¶çš„å¸ƒå±€
 				groupOne.setLayout(new GridLayout());
 
 				GridData grid = new GridData();
 				grid.verticalIndent = 5;
 				grid.horizontalIndent = 10;
 				final Combo combo1 = new Combo(groupOne, SWT.NONE);
-				// ÔÚÏÂÀ­¿òÖÐÉèÖÃÏÂÀ­Ïî
-				combo1.setItems(new String[] { " Ä¬ÈÏÉè±¸ ", "Realtek AC97 Audio" });
+				// åœ¨ä¸‹æ‹‰æ¡†ä¸­è®¾ç½®ä¸‹æ‹‰é¡¹
+				combo1.setItems(new String[] { " é»˜è®¤è®¾å¤‡ ", "Realtek AC97 Audio" });
 				combo1.setLayoutData(grid);
 				final Button check1 = new Button(groupOne, SWT.CHECK);
-				check1.setText(" ×Ô¶¯µ÷ÕûÂó¿Ë·çÁéÃô¶È (&A)");
+				check1.setText(" è‡ªåŠ¨è°ƒæ•´éº¦å…‹é£Žçµæ•åº¦ (&A)");
 				check1.setLayoutData(grid);
 			}
 		}
-		// ÔÚ comp2 ÉÏ¶¨Òå groupTwo ·Ö×é¿ò£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		// åœ¨ comp2 ä¸Šå®šä¹‰ groupTwo åˆ†ç»„æ¡†ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 		{
 			Group groupTwo = new Group(comp2, SWT.NONE);
-			groupTwo.setText(" ÊäÈë¡ªÑïÉùÆ÷»ò¶úÂó ");
+			groupTwo.setText(" è¾“å…¥â€•æ‰¬å£°å™¨æˆ–è€³éº¦ ");
 			GridData gridGroupTwo = new GridData(GridData.FILL_HORIZONTAL);
 			gridGroupTwo.horizontalIndent = 20;
 			gridGroupTwo.verticalSpan = 20;
 			groupTwo.setLayoutData(gridGroupTwo);
-			{// ÉèÖÃ groupTwo Ãæ°åÉÏ×é¼þ£¬²¢¶Ô×é¼þ½øÐÐ²¼¾Ö
+			{// è®¾ç½® groupTwo é¢æ¿ä¸Šç»„ä»¶ï¼Œå¹¶å¯¹ç»„ä»¶è¿›è¡Œå¸ƒå±€
 				groupTwo.setLayout(new GridLayout());
 				GridData gridData = new GridData();
 				gridData.horizontalIndent = 10;
@@ -315,28 +315,28 @@ public class Demo5 {
 				gridData.verticalSpan = 5;
 
 				final Label lab1 = new Label(groupTwo, SWT.NONE);
-				lab1.setText(" Í¨Öª¡ªÁåÉù (&N)");
+				lab1.setText(" é€šçŸ¥â€•é“ƒå£° (&N)");
 				lab1.setLayoutData(gridData);
 				final Combo combo2 = new Combo(groupTwo, SWT.NONE);
-				combo2.setItems(new String[] { " ËùÓÐÉè±¸ ", " Ä¬ÈÏÉè±¸ ", "Realtek AC97 Audio" });
+				combo2.setItems(new String[] { " æ‰€æœ‰è®¾å¤‡ ", " é»˜è®¤è®¾å¤‡ ", "Realtek AC97 Audio" });
 				combo2.setLayoutData(gridData);
 				final Label lab2 = new Label(groupTwo, SWT.NONE);
-				lab2.setText(" ºô½Ð (&C)");
+				lab2.setText(" å‘¼å« (&C)");
 				lab2.setLayoutData(gridData);
 				final Combo combo3 = new Combo(groupTwo, SWT.NONE);
-				combo3.setItems(new String[] { " Ä¬ÈÏÉè±¸ ", "Realtek AC97 Audio" });
+				combo3.setItems(new String[] { " é»˜è®¤è®¾å¤‡ ", "Realtek AC97 Audio" });
 				combo3.setLayoutData(gridData);
 				final Button cancelButton = new Button(groupTwo, SWT.CHECK);
-				cancelButton.setText(" ÏìÁåÊ±È¡ÏûÑïÉùÆ÷¾²Òô (&S)");
+				cancelButton.setText(" å“é“ƒæ—¶å–æ¶ˆæ‰¬å£°å™¨é™éŸ³ (&S)");
 				GridData gridDataCancel = new GridData();
 				gridDataCancel.verticalSpan = 6;
 				cancelButton.setLayoutData(gridDataCancel);
 			}
 		}
-		// ÔÚ comp2 ÉÏÉèÖÃ callButton °´Å¥£¬²¢¶ÔÆä½øÐÐ²¼¾Ö
+		// åœ¨ comp2 ä¸Šè®¾ç½® callButton æŒ‰é’®ï¼Œå¹¶å¯¹å…¶è¿›è¡Œå¸ƒå±€
 		{
 			final Button callButton = new Button(comp2, SWT.CHECK);
-			callButton.setText(" ºô½ÐÊ±È¡ÏûÑïÉùÆ÷ºÍÂó¿Ë·ç¾²Òô (&U)");
+			callButton.setText(" å‘¼å«æ—¶å–æ¶ˆæ‰¬å£°å™¨å’Œéº¦å…‹é£Žé™éŸ³ (&U)");
 			GridData gridDataCall = new GridData();
 			gridDataCall.horizontalIndent = 20;
 			gridDataCall.verticalSpan = 6;
@@ -348,7 +348,7 @@ public class Demo5 {
 		comp3 = new Composite(composite, SWT.BORDER);
 		comp3.setLayout(new GridLayout());
 		final Label labelRefuse = new Label(comp3, SWT.NONE);
-		labelRefuse.setText("±»¾Ü ");
+		labelRefuse.setText("è¢«æ‹’ ");
 		//new Scale(comp3, SWT.BORDER);
 		var scale=new Scale(comp3, SWT.HORIZONTAL);
 		//new Scale(comp3, SWT.VERTICAL);
@@ -358,12 +358,12 @@ public class Demo5 {
 		gridData.widthHint=160;
 		label.setLayoutData(gridData);
 		label.setBackground(display.getSystemColor(SWT.COLOR_CYAN));
-		label.setText("ÒôÁ¿");
+		label.setText("éŸ³é‡");
 		scale.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int val = scale.getSelection();
-				label.setText("ÒôÁ¿"+val+"");
+				label.setText("éŸ³é‡"+val+"");
 				super.widgetSelected(e);
 			}
 		});
@@ -376,7 +376,7 @@ public class Demo5 {
 		gridLayout.numColumns=3;
 		comp4.setLayout(gridLayout);
 		final Label labelNotice = new Label(comp4, SWT.NONE);
-		labelNotice.setText(" Í¨Öª ");
+		labelNotice.setText(" é€šçŸ¥ ");
 		ExpandBar expandBar = new ExpandBar(comp4, SWT.NONE);
 		ExpandItem expandItem = new ExpandItem(expandBar, SWT.NONE);
 		ExpandItem expandItem2 = new ExpandItem(expandBar, SWT.NONE);
@@ -384,7 +384,7 @@ public class Demo5 {
 		Composite composite2 = new Composite(expandBar, SWT.NONE);
 		composite2.setLayout(new FillLayout());
 		Label label = new Label(composite2, SWT.NONE);
-		label.setText("±êÇ©");
+		label.setText("æ ‡ç­¾");
 		expandItem.setHeight(120);
 		expandItem.setControl(composite2);
 
@@ -416,7 +416,7 @@ public class Demo5 {
 		
 		IntStream.range(1, 10).forEach(it->{
 			CTabItem cTabItem = new CTabItem(cTabFolder, SWT.CLOSE);
-			cTabItem.setText("±êÇ©"+it);
+			cTabItem.setText("æ ‡ç­¾"+it);
 		});
 		
 	}
