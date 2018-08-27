@@ -17,6 +17,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="cn/boz/mybaits/mapper/MyMapper.xml"/>
+		<package name="cn.boz.mybaits.mapper" />
 	</mappers>
 </configuration>
