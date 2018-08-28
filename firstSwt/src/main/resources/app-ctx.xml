@@ -8,13 +8,14 @@
 
 	<context:component-scan base-package="cn.boz"></context:component-scan>
 
+	<context:property-placeholder
+		location="classpath:db.properties" system-properties-mode="NEVER"/>
+
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
-		<property name="jdbcUrl"
-			value="jdbc:mysql:///activiti?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Hongkong"></property>
-		<property name="driverClassName"
-			value="com.mysql.jdbc.Driver"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value=""></property>
+		<property name="jdbcUrl" value="${url}"></property>
+		<property name="driverClassName" value="${driver}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
 	</bean>
 
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -24,8 +25,7 @@
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage"
-			value="cn.boz.mapper" />
+		<property name="basePackage" value="cn.boz.ora.mapper" />
 	</bean>
 
 </beans>

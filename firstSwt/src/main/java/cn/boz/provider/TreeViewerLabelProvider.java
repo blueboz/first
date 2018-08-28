@@ -10,7 +10,7 @@ import cn.boz.domain.pojo.ActReProcdef;
 import cn.boz.domain.pojo.ActRuExecution;
 import cn.boz.domain.pojo.ActRuTask;
 
-@Component
+//@Component
 public class TreeViewerLabelProvider implements ILabelProvider {
 
 	@Override

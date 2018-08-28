@@ -21,7 +21,7 @@ import cn.boz.mapper.ActReProcdefMapper;
 import cn.boz.mapper.ActRuExecutionMapper;
 import cn.boz.mapper.ActRuTaskMapper;
 
-@Component
+//@Component
 public class TreeViewerContentProvider extends ArrayContentProvider implements ITreeContentProvider {
 
 	@Autowired
