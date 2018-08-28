@@ -9,13 +9,13 @@
 	<context:component-scan base-package="cn.boz"></context:component-scan>
 
 	<context:property-placeholder
-		location="classpath:db.properties" system-properties-mode="NEVER"/>
+		location="classpath:db.properties" />
 
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
-		<property name="jdbcUrl" value="${url}"></property>
-		<property name="driverClassName" value="${driver}"></property>
-		<property name="username" value="${username}"></property>
-		<property name="password" value="${password}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
 	</bean>
 
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
