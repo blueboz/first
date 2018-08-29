@@ -16,9 +16,11 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
@@ -35,6 +37,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import cn.boz.plugin.learn.actions.AddressDeleteAction;
+import cn.boz.plugin.learn.actions.AddressViewFilterAction;
 import cn.boz.plugin.learn.model.AddressItem;
 import cn.boz.plugin.learn.model.AddressManager;
 import cn.boz.plugin.learn.model.AddressViewContentProvider;
@@ -167,6 +170,7 @@ public class AddressView extends ViewPart {
 
 	/**
 	 * 右上角便便的哪个小箭头收起的按钮里面
+	 * 
 	 * @param manager
 	 */
 	private void fillLocalPullDown(IMenuManager manager) {
@@ -178,6 +182,7 @@ public class AddressView extends ViewPart {
 
 	/**
 	 * 将视图填充到上下文菜单，也就是右键
+	 * 
 	 * @param manager
 	 */
 	private void fillContextMenu(IMenuManager manager) {
@@ -186,10 +191,12 @@ public class AddressView extends ViewPart {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(addressDeleteAction);
+		manager.add(filterAction);
 	}
 
 	/**
 	 * 将Action填充到视图的工具栏中
+	 * 
 	 * @param manager
 	 */
 	private void fillLocalToolBar(IToolBarManager manager) {
@@ -200,10 +207,29 @@ public class AddressView extends ViewPart {
 
 	private AddressDeleteAction addressDeleteAction;
 
+	private AddressViewFilterAction filterAction;
+
 	private void makeActions() {
 		addressDeleteAction = new AddressDeleteAction(this, "删除",
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 		addressDeleteAction.setToolTipText("点击进行删除");
+		// 只有在选择了某几行才有用
+		addressDeleteAction.setEnabled(false);
+
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				boolean flag = event.getSelection().isEmpty();
+				addressDeleteAction.setEnabled(!flag);
+
+			}
+		});
+
+		filterAction = new AddressViewFilterAction(viewer, "过滤",
+				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_DEF_VIEW));
+		filterAction.setToolTipText("点击进行过滤");
+
 		action1 = new Action() {
 			public void run() {
 				showMessage("Action 1 executed");
