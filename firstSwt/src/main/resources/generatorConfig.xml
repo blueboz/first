@@ -53,11 +53,12 @@
 			<table tableName="act_ru_job"></table> <table tableName="act_ru_task"></table> 
 			<table tableName="act_ru_variable"> <columnOverride column="DOUBLE_" property="doubleval" 
 			/> <columnOverride column="LONG_" property="longval" /> </table> -->
-		<table tableName="DBA_USERS" schema="SYS"></table>
+	<!-- 	<table tableName="DBA_USERS" schema="SYS"></table>
 		<table tableName="DBA_SYS_PRIVS" schema="SYS"></table>
 		<table tableName="DBA_ROLE_PRIVS" schema="SYS"></table>
 		<table tableName="USER_SYS_PRIVS" schema="SYS"></table>
 		<table tableName="USER_ROLE_PRIVS" schema="SYS"></table>
-		<table tableName="ROLE_SYS_PRIVS" schema="SYS"></table>
+		<table tableName="ROLE_SYS_PRIVS" schema="SYS"></table> -->
+		<table tableName="ROLE_ROLE_PRIVS" schema="SYS"></table>
 	</context>
 </generatorConfiguration>

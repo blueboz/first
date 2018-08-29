@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import cn.boz.domain.ora.pojo.DbaRolePrivs;
 import cn.boz.domain.ora.pojo.DbaUsers;
 import cn.boz.utils.ImageStore;
 
@@ -50,6 +51,8 @@ public class DbaUserListLabelProvider implements ITableLabelProvider {
 	public String getColumnText(Object element, int columnIndex) {
 		if (element instanceof DbaUsers) {
 			return ((DbaUsers) element).getUsername();
+		}else if(element instanceof DbaRolePrivs) {
+			return ((DbaRolePrivs) element).getGrantedRole();
 		}
 		return "";
 	}

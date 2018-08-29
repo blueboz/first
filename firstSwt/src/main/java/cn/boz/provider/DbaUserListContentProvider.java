@@ -17,6 +17,8 @@ public class DbaUserListContentProvider extends ArrayContentProvider {
 	private DbaUsersMapper usersMapper;
 
 	public List<DbaUsers> getElements() {
-		return usersMapper.selectByExample(new DbaUsersExample());
+		DbaUsersExample example = new DbaUsersExample();
+		example.setOrderByClause("USERNAME ASC");
+		return usersMapper.selectByExample(example);
 	}
 }

@@ -77,3 +77,14 @@ sourceCompatibility = '1.10'
 targetCompatibility = '1.10'
 
 allprojects.each{println it.name }
+
+//def dir=System.getProperty("user.dir");
+//println dir
+
+sourceSets {
+  main {
+    java {
+      exclude 'some/unwanted/package/**'
+    }
+  }
+}
