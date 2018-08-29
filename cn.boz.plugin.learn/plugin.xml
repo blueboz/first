@@ -392,7 +392,7 @@
             </separator>
          </menu>
          <action
-               class="cn.boz.plugin.learn.actions.MyViewAction"
+               class="cn.boz.plugin.learn.actions.AddressViewFilterAction"
                icon="icons/food/h4.ico"
                id="cn.boz.plugin.learn.action2"
                label="小视图油条"

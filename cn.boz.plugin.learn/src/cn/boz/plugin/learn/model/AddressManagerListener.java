@@ -4,6 +4,5 @@ public interface AddressManagerListener {
 
 	public void addressesChanged(AddressManagerEvent evt);
 
-	void addressesChanged();
 }
 

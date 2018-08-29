@@ -1,6 +1,7 @@
 package cn.boz.plugin.learn.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -24,7 +25,10 @@ public class AddressManager {
 		this.addresses = addresses;
 	}
 	
-	public void fireAddressChanged() {
+	public void fireAddressChanged(AddressManagerEvent evt) {
+		listeners.forEach(it->{
+			it.addressesChanged(evt);
+		});
 		return ;
 	}
 	
@@ -54,5 +58,11 @@ public class AddressManager {
 	
 	public List<AddressItem> getAddresses() {
 		return addresses;
+	}
+
+	public void removeAddresses(AddressItem[] selectedAddress) {
+		AddressManagerEvent evt = new AddressManagerEvent();
+		evt.setItemRemoved(Arrays.asList(selectedAddress));
+		fireAddressChanged(evt);
 	}
 }

@@ -1,6 +1,7 @@
 package cn.boz.plugin.learn.views;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 import javax.inject.Inject;
 
@@ -11,13 +12,16 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -30,6 +34,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import cn.boz.plugin.learn.actions.AddressDeleteAction;
 import cn.boz.plugin.learn.model.AddressItem;
 import cn.boz.plugin.learn.model.AddressManager;
 import cn.boz.plugin.learn.model.AddressViewContentProvider;
@@ -93,7 +98,7 @@ public class AddressView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 
 		Table table = viewer.getTable();
 		tc = new TableColumn(table, SWT.None);
@@ -150,6 +155,7 @@ public class AddressView extends ViewPart {
 		});
 		Menu menu = menuMgr.createContextMenu(viewer.getControl());
 		viewer.getControl().setMenu(menu);
+		menuMgr.add(addressDeleteAction);
 		getSite().registerContextMenu(menuMgr, viewer);
 	}
 
@@ -159,25 +165,45 @@ public class AddressView extends ViewPart {
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
+	/**
+	 * 右上角便便的哪个小箭头收起的按钮里面
+	 * @param manager
+	 */
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(action1);
 		manager.add(new Separator());
 		manager.add(action2);
+		manager.add(addressDeleteAction);
 	}
 
+	/**
+	 * 将视图填充到上下文菜单，也就是右键
+	 * @param manager
+	 */
 	private void fillContextMenu(IMenuManager manager) {
 		manager.add(action1);
 		manager.add(action2);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(addressDeleteAction);
 	}
 
+	/**
+	 * 将Action填充到视图的工具栏中
+	 * @param manager
+	 */
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(action1);
 		manager.add(action2);
+		manager.add(addressDeleteAction);
 	}
 
+	private AddressDeleteAction addressDeleteAction;
+
 	private void makeActions() {
+		addressDeleteAction = new AddressDeleteAction(this, "删除",
+				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		addressDeleteAction.setToolTipText("点击进行删除");
 		action1 = new Action() {
 			public void run() {
 				showMessage("Action 1 executed");
@@ -193,6 +219,7 @@ public class AddressView extends ViewPart {
 				showMessage("Action 2 executed");
 			}
 		};
+
 		action2.setText("Action 2");
 		action2.setToolTipText("Action 2 tooltip");
 		action2.setImageDescriptor(workbench.getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
@@ -223,5 +250,17 @@ public class AddressView extends ViewPart {
 	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
+	}
+
+	public AddressItem[] getSelectedAddress() {
+		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+		var ais = new AddressItem[selection.size()];
+
+		Iterator<AddressItem> iterator = selection.iterator();
+		int index = 0;
+		while (iterator.hasNext()) {
+			ais[index++] = iterator.next();
+		}
+		return ais;
 	}
 }
