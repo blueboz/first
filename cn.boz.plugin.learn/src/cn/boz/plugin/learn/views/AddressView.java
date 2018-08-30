@@ -8,12 +8,14 @@ import javax.inject.Inject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -25,13 +27,20 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
@@ -58,7 +67,7 @@ import cn.boz.plugin.learn.model.AddressViewSorter;
  * <p>
  */
 
-public class AddressView extends ViewPart {
+public class AddressView extends ViewPart implements ISelectionListener {
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -122,13 +131,38 @@ public class AddressView extends ViewPart {
 		viewer.setContentProvider(avcp);
 		viewer.setInput(AddressManager.getManager());
 		viewer.setLabelProvider(new AddressViewLabelProvider());
-		//设置ColumnProperty是为了方便CellModifier
+		// 设置ColumnProperty是为了方便CellModifier
 		viewer.setColumnProperties(AddressItem.COLUMNS);
+
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				// 获取ViewSite ，获取Action Bars
+				// 获取状态栏
+				IStatusLineManager statusLineManager = getViewSite().getActionBars().getStatusLineManager();
+
+				Object obj = selection.getFirstElement();
+				if (obj == null) {
+					return;
+				}
+				if (obj instanceof AddressItem) {
+					AddressItem addressItem = (AddressItem) obj;
+					statusLineManager
+							.setMessage(addressItem.getName() + ":" + AddressItem.CATEGORYS[addressItem.getCategory()]);
+				} else {
+					statusLineManager.setMessage(obj.toString());
+
+				}
+			}
+		});
 		workbench.getHelpSystem().setHelp(viewer.getControl(), "cn.boz.plugin.learn.viewer");
 
 		// 共享被选中的内容，必须设置SelectionProvider
 		getSite().setSelectionProvider(viewer);
-		
+		// 监听
+		getSite().getPage().addSelectionListener(this);
 		createTableSorter();
 		makeActions();
 		hookContextMenu();
@@ -317,5 +351,17 @@ public class AddressView extends ViewPart {
 			ais[index++] = iterator.next();
 		}
 		return ais;
+	}
+
+	/**
+	 * 新增监听其他WorkBeach监听器
+	 * 
+	 * @param part
+	 * @param selection
+	 */
+	@Override
+	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+		// TODO Auto-generated method stub
+
 	}
 }
