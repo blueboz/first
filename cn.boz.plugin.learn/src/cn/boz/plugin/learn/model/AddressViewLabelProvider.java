@@ -5,18 +5,21 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 public class AddressViewLabelProvider extends LabelProvider implements ITableLabelProvider {
-	//此处一并完成吗
+	// 此处一并完成吗
 	@Override
 	public String getColumnText(Object obj, int index) {
-		if(obj!=null&&obj instanceof AddressItem) {
-			AddressItem ai=(AddressItem) obj;
+		if (obj != null && obj instanceof AddressItem) {
+			AddressItem ai = (AddressItem) obj;
 			switch (index) {
 			case 0:
 				return ai.getName();
 			case 1:
-				return ai.getCategory();
+				int category = ai.getCategory();
+				return AddressItem.CATEGORYS[category];
 			case 2:
 				return ai.getMessageInfo();
+			case 3:
+				return ai.getAge();
 			}
 		}
 		return "";

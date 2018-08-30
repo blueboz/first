@@ -2,6 +2,7 @@ package cn.boz.plugin.learn.model;
 
 import java.util.List;
 
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -43,6 +44,16 @@ public class AddressViewContentProvider implements IStructuredContentProvider,Ad
 			viewer.add(evt.getItemAdded());
 		}
 		viewer.getTable().setRedraw(false);
+	}
+	
+	
+	public void itemChanged() {
+	}
+	
+	@Override
+	public void addressItemChange(PropertyChangeEvent event) {
+		viewer.update(event.getNewValue(), new String[] {event.getProperty()});
+		viewer.refresh();
 	}
 
 }

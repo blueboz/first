@@ -12,10 +12,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -23,7 +21,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -98,38 +97,45 @@ public class AddressView extends ViewPart {
 	TableColumn tc;
 	TableColumn tc2;
 	TableColumn tc3;
+	TableColumn tc4;
 
 	@Override
 	public void createPartControl(Composite parent) {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
-
 		Table table = viewer.getTable();
 		tc = new TableColumn(table, SWT.None);
 		table.setHeaderVisible(true);
 		tc.setText("姓名");
 		tc.setWidth(120);
 		tc2 = new TableColumn(table, SWT.None);
-		tc2.setText("年龄");
+		tc2.setText("类别");
 		tc2.setWidth(120);
 		tc3 = new TableColumn(table, SWT.None);
 		tc3.setText("住址");
 		tc3.setWidth(120);
+		tc4 = new TableColumn(table, SWT.None);
+		tc4.setText("年龄");
+		tc4.setWidth(120);
 		table.setLinesVisible(true);
 
 		var avcp = new AddressViewContentProvider();
 		viewer.setContentProvider(avcp);
 		viewer.setInput(AddressManager.getManager());
 		viewer.setLabelProvider(new AddressViewLabelProvider());
-
-		// Create the help context id for the viewer's control
+		//设置ColumnProperty是为了方便CellModifier
+		viewer.setColumnProperties(AddressItem.COLUMNS);
 		workbench.getHelpSystem().setHelp(viewer.getControl(), "cn.boz.plugin.learn.viewer");
 
+		// 共享被选中的内容，必须设置SelectionProvider
 		getSite().setSelectionProvider(viewer);
+		
 		createTableSorter();
 		makeActions();
 		hookContextMenu();
 		hookDoubleClickAction();
 		contributeToActionBars();
+		// 新增了点击Del按钮对栏目进行删除的key绑定
+		hookKeyboardActions();
 	}
 
 	private void createTableSorter() {
@@ -137,13 +143,17 @@ public class AddressView extends ViewPart {
 			return ai1.getName().compareTo(ai2.getName());
 		};
 		Comparator<AddressItem> cc = (AddressItem ai1, AddressItem ai2) -> {
-			return ai1.getCategory().compareTo(ai2.getCategory());
+			return ai1.getCategory() - ai2.getCategory();
 		};
 		Comparator<AddressItem> mc = (AddressItem ai1, AddressItem ai2) -> {
 			return ai1.getMessageInfo().compareTo(ai2.getMessageInfo());
 		};
-		var cs = new Comparator[] { nc, cc, mc };
-		var ts = new TableColumn[] { tc, tc2, tc3 };
+		Comparator<AddressItem> ac = (AddressItem ai1, AddressItem ai2) -> {
+			return ai1.getAge().compareTo(ai2.getAge());
+		};
+
+		var cs = new Comparator[] { nc, cc, mc, ac };
+		var ts = new TableColumn[] { tc, tc2, tc3, tc4 };
 		var sorter = new AddressViewSorter(viewer, ts, cs);
 		viewer.setComparator(sorter);
 	}
@@ -256,6 +266,25 @@ public class AddressView extends ViewPart {
 				showMessage("Double-click detected on " + obj.toString());
 			}
 		};
+
+	}
+
+	private void hookKeyboardActions() {
+		viewer.getControl().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				handleKeyReleased(e);
+				super.keyReleased(e);
+			}
+		});
+	}
+
+	protected void handleKeyReleased(KeyEvent ke) {
+		if (ke.character == SWT.DEL) {
+			addressDeleteAction.run();
+		}
+
 	}
 
 	private void hookDoubleClickAction() {
