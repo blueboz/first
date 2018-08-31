@@ -27,20 +27,18 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IMemento;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
@@ -73,6 +71,8 @@ public class AddressView extends ViewPart implements ISelectionListener {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "cn.boz.plugin.learn.views.AddressView";
+
+	private IMemento memento;
 
 	@Inject
 	IWorkbench workbench;
@@ -172,6 +172,8 @@ public class AddressView extends ViewPart implements ISelectionListener {
 		hookKeyboardActions();
 	}
 
+	AddressViewSorter sorter;
+
 	private void createTableSorter() {
 		Comparator<AddressItem> nc = (AddressItem ai1, AddressItem ai2) -> {
 			return ai1.getName().compareTo(ai2.getName());
@@ -188,7 +190,11 @@ public class AddressView extends ViewPart implements ISelectionListener {
 
 		var cs = new Comparator[] { nc, cc, mc, ac };
 		var ts = new TableColumn[] { tc, tc2, tc3, tc4 };
-		var sorter = new AddressViewSorter(viewer, ts, cs);
+		sorter = new AddressViewSorter(viewer, ts, cs);
+		//为何在这里执行？不能再init 执行吗。因为在init 哪个还不在
+		if (memento != null) {
+			sorter.init(memento);
+		}
 		viewer.setComparator(sorter);
 	}
 
@@ -235,7 +241,7 @@ public class AddressView extends ViewPart implements ISelectionListener {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(addressDeleteAction);
-		manager.add(filterAction);
+
 	}
 
 	/**
@@ -247,6 +253,9 @@ public class AddressView extends ViewPart implements ISelectionListener {
 		manager.add(action1);
 		manager.add(action2);
 		manager.add(addressDeleteAction);
+		if(memento!=null)
+		filterAction.init(memento);
+		manager.add(filterAction);
 	}
 
 	private AddressDeleteAction addressDeleteAction;
@@ -363,5 +372,25 @@ public class AddressView extends ViewPart implements ISelectionListener {
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * 初始化设定Memento
+	 */
+	@Override
+	public void init(IViewSite site, IMemento memento) throws PartInitException {
+		super.init(site, memento);
+		this.memento = memento;
+		
+	}
+
+	/**
+	 * 保存状态
+	 */
+	@Override
+	public void saveState(IMemento memento) {
+		super.saveState(memento);
+		sorter.saveState(memento);
+		filterAction.saveState(memento);
 	}
 }

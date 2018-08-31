@@ -4,6 +4,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import cn.boz.plugin.learn.model.AddressManager;
+import cn.boz.plugin.learn.utils.ImageCache;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -36,7 +39,11 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
+		AddressManager.getManager().saveAddresses();
+		//采用单例的设计模式就是有这样的优势
+		ImageCache.getInstance().dipose();
 		plugin = null;
+		//关闭的时候，我们 可以获取单例对象进行持久化
 		super.stop(context);
 	}
 

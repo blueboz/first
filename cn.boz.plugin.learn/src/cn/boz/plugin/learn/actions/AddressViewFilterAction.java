@@ -5,6 +5,7 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IMemento;
 
 public class AddressViewFilterAction extends Action {
 
@@ -30,5 +31,13 @@ public class AddressViewFilterAction extends Action {
 		}
 
 		super.run();
+	}
+	
+	public void init(IMemento memento) {
+		categoryFilter.init(memento);
+	}
+
+	public void saveState(IMemento memento) {
+		categoryFilter.saveState(memento);
 	}
 }

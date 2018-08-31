@@ -1,13 +1,24 @@
 package cn.boz.plugin.learn.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.WorkbenchException;
+import org.eclipse.ui.XMLMemento;
+
+import cn.boz.plugin.learn.Activator;
 
 public class AddressManager implements IPropertyChangeListener {
 
@@ -16,15 +27,21 @@ public class AddressManager implements IPropertyChangeListener {
 	private static AddressManager manager;
 
 	private AddressManager() {
-		Random random = new Random();
-		IntStream.range(0, 20).forEach(i -> {
-			AddressItem ai = new AddressItem();
-			ai.setName("ÖÜ½ÜÂ×" + i);
-			ai.setCategory(random.nextInt(AddressItem.CATEGORYS.length));
-			ai.setAge(random.nextInt(100) + "Ëê");
-			ai.setMessageInfo(i + "From the world that is far away");
-			addresses.add(ai);
-		});
+		loadAddresses();
+		if(addresses.isEmpty()) {
+			Random random = new Random();
+			IntStream.range(0, 20).forEach(i -> {
+				AddressItem ai = new AddressItem();
+				int nextInt = random.nextInt(90);
+				ai.setName("ÖÜ½ÜÂ×" + nextInt + 9);
+				ai.setCategory(random.nextInt(AddressItem.CATEGORYS.length));
+				nextInt = random.nextInt(90);
+				ai.setAge(nextInt + 9 + "Ëê");
+				nextInt = random.nextInt(90);
+				ai.setMessageInfo(nextInt + 9 + "From the world that is far away");
+				addresses.add(ai);
+			});
+		}
 	}
 
 	public void setAddresses(List<AddressItem> addresses) {
@@ -83,6 +100,70 @@ public class AddressManager implements IPropertyChangeListener {
 		listeners.forEach(it -> {
 			it.addressItemChange(event);
 		});
+	}
+
+	public static final String TAG_ADDRESSES = "Addresses";
+	public static final String TAG_ADDRESS = "Address";
+
+	public void saveAddresses() {
+		if (addresses == null)
+			return;
+		XMLMemento xmlMemento = XMLMemento.createWriteRoot(TAG_ADDRESSES);
+		addresses.forEach(it -> {
+			IMemento addr = xmlMemento.createChild(TAG_ADDRESS);
+			addr.putString("name", it.getName());
+			addr.putString("age", it.getAge());
+			addr.putString("messageInfo", it.getMessageInfo());
+			addr.putInteger("category", it.getCategory());
+		});
+		FileWriter writer;
+		try {
+			writer = new FileWriter(getAddressesFile());
+			xmlMemento.save(writer);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public File getAddressesFile()  {
+		IPath loc = Activator.getDefault().getStateLocation();
+		IPath append = loc.append("Addresses.xml");
+		return append.toFile();
+	}
+
+	public void loadAddresses() {
+		FileReader reader = null;
+		try {
+			reader = new FileReader(getAddressesFile());
+			XMLMemento xml = XMLMemento.createReadRoot(reader);
+			loadAddresses(xml);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (WorkbenchException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (reader != null)
+					reader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void loadAddresses(XMLMemento memento) {
+		IMemento[] chs = memento.getChildren(TAG_ADDRESS);
+		for (int i = 0; i < chs.length; i++) {
+			IMemento iMemento = chs[i];
+			AddressItem addressItem = new AddressItem();
+			addressItem.setName(iMemento.getString("name"));
+			addressItem.setAge(iMemento.getString("age"));
+			addressItem.setMessageInfo(iMemento.getString("messageInfo"));
+			addressItem.setCategory(iMemento.getInteger("category"));
+			addresses.add(addressItem);
+		}
 	}
 
 }
