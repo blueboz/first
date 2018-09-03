@@ -433,4 +433,14 @@
             sequence="CTRL+SHIFT+V">
       </key>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="cn.boz.plugin.editor.BluebozEditor"
+            default="false"
+            icon="icons/icons/editors/editor.gif"
+            id="BluebozEditor"
+            name="田总编辑器">
+      </editor>
+   </extension>
 </plugin>

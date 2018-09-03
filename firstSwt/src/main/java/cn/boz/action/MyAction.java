@@ -1,5 +1,7 @@
 package cn.boz.action;
 
+import java.util.Properties;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 

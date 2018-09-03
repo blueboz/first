@@ -37,11 +37,13 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import cn.boz.plugin.editor.BluebozEditorInput;
 import cn.boz.plugin.learn.actions.AddressDeleteAction;
 import cn.boz.plugin.learn.actions.AddressViewFilterAction;
 import cn.boz.plugin.learn.model.AddressItem;
@@ -191,7 +193,7 @@ public class AddressView extends ViewPart implements ISelectionListener {
 		var cs = new Comparator[] { nc, cc, mc, ac };
 		var ts = new TableColumn[] { tc, tc2, tc3, tc4 };
 		sorter = new AddressViewSorter(viewer, ts, cs);
-		//为何在这里执行？不能再init 执行吗。因为在init 哪个还不在
+		// 为何在这里执行？不能再init 执行吗。因为在init 哪个还不在
 		if (memento != null) {
 			sorter.init(memento);
 		}
@@ -253,8 +255,8 @@ public class AddressView extends ViewPart implements ISelectionListener {
 		manager.add(action1);
 		manager.add(action2);
 		manager.add(addressDeleteAction);
-		if(memento!=null)
-		filterAction.init(memento);
+		if (memento != null)
+			filterAction.init(memento);
 		manager.add(filterAction);
 	}
 
@@ -305,8 +307,18 @@ public class AddressView extends ViewPart implements ISelectionListener {
 		doubleClickAction = new Action() {
 			public void run() {
 				IStructuredSelection selection = viewer.getStructuredSelection();
-				Object obj = selection.getFirstElement();
-				showMessage("Double-click detected on " + obj.toString());
+				AddressItem addressItem = (AddressItem) selection.getFirstElement();
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				//根据当前对象，创建了一个Input对象，这个Input对象包含了name
+				BluebozEditorInput input = new BluebozEditorInput(addressItem.getName());
+				try {
+					//主要是知道能够通过ActivePage进行
+					page.openEditor(input, "BluebozEditor");
+				} catch (PartInitException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				///showMessage("Double-click detected on " + obj.toString());
 			}
 		};
 
@@ -381,7 +393,7 @@ public class AddressView extends ViewPart implements ISelectionListener {
 	public void init(IViewSite site, IMemento memento) throws PartInitException {
 		super.init(site, memento);
 		this.memento = memento;
-		
+
 	}
 
 	/**

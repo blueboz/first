@@ -66,17 +66,12 @@ repositories {
     jcenter()
 }
 
-task showRepos{
-	doLast{
-		println "All repos:"
-		println repositories.collect {it.name}
-	}
-}
+
 
 sourceCompatibility = '1.10'
 targetCompatibility = '1.10'
 
-allprojects.each{println it.name }
+//allprojects.each{println it.name }
 
 //def dir=System.getProperty("user.dir");
 //println dir
@@ -88,3 +83,12 @@ sourceSets {
     }
   }
 }
+
+
+
+
+
+
+
+
+
