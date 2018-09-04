@@ -7,3 +7,5 @@ build
 .class
 .gitignore.bak
 target
+.log
+log
