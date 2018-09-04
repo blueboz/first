@@ -7,11 +7,11 @@
 <application generated-by="eclipse" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
 	<classpath>
-		<dir name="C:/Users/Administrator/eclipse-workspace2/ticketMiner/bin/main">
+		<dir name="C:/Users/Administrator/git/firstSwt/ticketMiner/bin/main">
 		</dir>
-		<dir name="C:/Users/Administrator/eclipse-workspace2/ticketMiner/bin/test">
+		<dir name="C:/Users/Administrator/git/firstSwt/ticketMiner/bin/test">
 		</dir>
-		<dir name="C:/Users/Administrator/eclipse-workspace2/ticketMiner/bin/default">
+		<dir name="C:/Users/Administrator/git/firstSwt/ticketMiner/bin/default">
 		</dir>
 	</classpath>
 

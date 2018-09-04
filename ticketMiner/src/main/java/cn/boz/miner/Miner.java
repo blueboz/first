@@ -3,6 +3,8 @@ package cn.boz.miner;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,23 +22,23 @@ import cn.boz.miner.network.HttpRequester;
 public class Miner {
 	private static Logger logger = LoggerFactory.getLogger(Miner.class);
 
-	static long freq=1000*60;
+	static long freq = 1000 * 60;
 
-	public static void main(String[] args) throws ClientProtocolException, IOException {
+	public static void main(String[] args) {
 		for (String str : args) {
 			String[] split = str.split("=");
-			if(split.length==2) {
-				if("freq".equals(split[0])) {
-					 freq = Long.parseLong(split[1])*1000;
+			if (split.length == 2) {
+				if ("freq".equals(split[0])) {
+					freq = Long.parseLong(split[1]) * 1000;
 				}
 			}
 		}
 		Miner miner = new Miner();
-		Thread thread = new Thread(()-> {
-			while(true) {
+		Thread thread = new Thread(() -> {
+			while (true) {
 				try {
 					miner.minerWork();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				try {
@@ -55,7 +57,7 @@ public class Miner {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void minerWork() throws JsonParseException, JsonMappingException, IOException{
+	public void minerWork() throws JsonParseException, JsonMappingException, IOException {
 		HttpClientBuilder builder = HttpClientBuilder.create();
 		String content = HttpRequester.getInstance().getRequest(
 				"https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date=2018-09-30&leftTicketDTO.from_station=IOQ&leftTicketDTO.to_station=CBQ&purpose_codes=ADULT");
@@ -70,7 +72,7 @@ public class Miner {
 				String decode = URLDecoder.decode(it, "UTF-8");
 				logstr.append(it);
 				String[] ts = decode.split("\\|");
-				if(ts[0]!=null&&ts[0].trim().length()>0) {
+				if (ts[0] != null && ts[0].trim().length() > 0) {
 					StringBuilder sb = new StringBuilder();
 					sb.append(ts[3]);
 					sb.append("\t");
@@ -84,11 +86,29 @@ public class Miner {
 					sb.append(" ");
 					sb.append(ts[10]);
 					sb.append("\t一：");
-					sb.append(ts[31]);
+					if ("无".equals(ts[31])) {
+						sb.append(" ");
+					} else if ("有".equals(ts[31])) {
+						sb.append("99+");
+					} else {
+						sb.append(ts[31]);
+					}
 					sb.append("\t二：");
-					sb.append(ts[30]);
+					if ("无".equals(ts[30])) {
+						sb.append(" ");
+					} else if ("有".equals(ts[31])) {
+						sb.append("99+");
+					} else {
+						sb.append(ts[30]);
+					}
 					sb.append("\t站：");
-					sb.append(ts[26]);
+					if ("无".equals(ts[26])) {
+						sb.append(" ");
+					} else if ("有".equals(ts[31])) {
+						sb.append("99+");
+					} else {
+						sb.append(ts[26]);
+					}
 					System.out.println(sb);
 				}
 			} catch (UnsupportedEncodingException e) {
@@ -96,6 +116,6 @@ public class Miner {
 			}
 		});
 		System.out.println();
-		logger.info(logstr.toString());	
+		logger.info(logstr.toString());
 	}
 }
