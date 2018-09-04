@@ -53,10 +53,6 @@ public class Miner {
 		thread.start();
 	}
 
-	public Miner() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public void minerWork() throws JsonParseException, JsonMappingException, IOException {
 		HttpClientBuilder builder = HttpClientBuilder.create();
 		String content = HttpRequester.getInstance().getRequest(
@@ -96,7 +92,7 @@ public class Miner {
 					sb.append("\t二：");
 					if ("无".equals(ts[30])) {
 						sb.append(" ");
-					} else if ("有".equals(ts[31])) {
+					} else if ("有".equals(ts[30])) {
 						sb.append("99+");
 					} else {
 						sb.append(ts[30]);
@@ -104,7 +100,7 @@ public class Miner {
 					sb.append("\t站：");
 					if ("无".equals(ts[26])) {
 						sb.append(" ");
-					} else if ("有".equals(ts[31])) {
+					} else if ("有".equals(ts[26])) {
 						sb.append("99+");
 					} else {
 						sb.append(ts[26]);
