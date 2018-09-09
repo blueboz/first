@@ -3,12 +3,9 @@ package cn.boz.miner;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,33 +16,55 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.boz.miner.network.HttpRequester;
 
-public class Miner {
+public class Miner extends Thread {
 	private static Logger logger = LoggerFactory.getLogger(Miner.class);
 
 	static long freq = 1000 * 60;
+	static long times = -1;
 
-	public static void main(String[] args) {
+	@Override
+	public void run() {
+		System.out.println("Does this really work?");
+		super.run();
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+
+		Runtime.getRuntime().addShutdownHook(new Miner());
+
+		String raw1 = HttpRequester.getInstance().getRequest(
+				"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8964");
+		
+		String raw2 = HttpRequester.getInstance().getRequest(
+				"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8964");
+		
+		String raw3 = HttpRequester.getInstance().getRequest(
+				"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8964");
+		
+		
 		for (String str : args) {
 			String[] split = str.split("=");
 			if (split.length == 2) {
 				if ("freq".equals(split[0])) {
 					freq = Long.parseLong(split[1]) * 1000;
+				} else if ("times".equals(split[0])) {
+					times = Long.parseLong(split[1]);
 				}
+
 			}
 		}
 		Miner miner = new Miner();
 		Thread thread = new Thread(() -> {
+			long j = times;
+			j++;
 			while (true) {
 				try {
 					miner.minerWork();
+					Thread.sleep(freq);
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
-				try {
-					Thread.sleep(freq);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} finally {
+					HttpRequester.getInstance().closeHttpClient();
 				}
 			}
 		});
@@ -55,8 +74,10 @@ public class Miner {
 
 	public void minerWork() throws JsonParseException, JsonMappingException, IOException {
 		HttpClientBuilder builder = HttpClientBuilder.create();
+		// String content = HttpRequester.getInstance().getRequest(
+		// "https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date=2018-10-07&leftTicketDTO.from_station=CBQ&leftTicketDTO.to_station=IOQ&purpose_codes=ADULT");
 		String content = HttpRequester.getInstance().getRequest(
-				"https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date=2018-09-30&leftTicketDTO.from_station=IOQ&leftTicketDTO.to_station=CBQ&purpose_codes=ADULT");
+				"https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date=2018-10-07&leftTicketDTO.from_station=JRQ&leftTicketDTO.to_station=CKQ&purpose_codes=ADULT");
 		Map<String, Object> map = new ObjectMapper().readValue(content, Map.class);
 		Map<String, Object> data = (Map<String, Object>) map.get("data");
 		Map<String, Object> infos = (Map<String, Object>) data.get("map");
