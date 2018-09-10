@@ -24,7 +24,7 @@ public class Miner extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("Does this really work?");
+		HttpRequester.getInstance().closeHttpClient();
 		super.run();
 	}
 
@@ -32,16 +32,6 @@ public class Miner extends Thread {
 
 		Runtime.getRuntime().addShutdownHook(new Miner());
 
-		String raw1 = HttpRequester.getInstance().getRequest(
-				"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8964");
-		
-		String raw2 = HttpRequester.getInstance().getRequest(
-				"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8964");
-		
-		String raw3 = HttpRequester.getInstance().getRequest(
-				"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8964");
-		
-		
 		for (String str : args) {
 			String[] split = str.split("=");
 			if (split.length == 2) {
@@ -55,17 +45,18 @@ public class Miner extends Thread {
 		}
 		Miner miner = new Miner();
 		Thread thread = new Thread(() -> {
-			long j = times;
-			j++;
+			int i=0;
 			while (true) {
+				i++;
+				if(i!=-1&&i>times) {
+					break;
+				}
 				try {
 					miner.minerWork();
 					Thread.sleep(freq);
 				} catch (Exception e) {
 					e.printStackTrace();
-				} finally {
-					HttpRequester.getInstance().closeHttpClient();
-				}
+				} 
 			}
 		});
 		thread.setName("Miner T");
@@ -74,8 +65,6 @@ public class Miner extends Thread {
 
 	public void minerWork() throws JsonParseException, JsonMappingException, IOException {
 		HttpClientBuilder builder = HttpClientBuilder.create();
-		// String content = HttpRequester.getInstance().getRequest(
-		// "https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date=2018-10-07&leftTicketDTO.from_station=CBQ&leftTicketDTO.to_station=IOQ&purpose_codes=ADULT");
 		String content = HttpRequester.getInstance().getRequest(
 				"https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date=2018-10-07&leftTicketDTO.from_station=JRQ&leftTicketDTO.to_station=CKQ&purpose_codes=ADULT");
 		Map<String, Object> map = new ObjectMapper().readValue(content, Map.class);

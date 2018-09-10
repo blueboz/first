@@ -166,7 +166,7 @@ public class Demo5 {
 		// 定义常规标签，并对其进行布局
 		{
 			final Label labRoutine = new Label(comp1, SWT.NONE);
-			labRoutine.setText(" 常规 ");
+			labRoutine.setText("常规 ");
 			// 用 GridData 对 labRoutine 进行布局
 			GridData gridRoutine = new GridData();
 			gridRoutine.horizontalSpan = 2;

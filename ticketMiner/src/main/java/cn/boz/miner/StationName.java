@@ -13,7 +13,7 @@ public class StationName {
 	private StationName() {
 		try {
 			String raw = HttpRequester.getInstance().getRequest(
-					"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8964");
+					"https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8964&11j");
 			String stations = raw.substring(raw.indexOf('\'') + 1, raw.lastIndexOf("\'"));
 			String[] stats = stations.split("@");
 			for (String stat : stats) {
