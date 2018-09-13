@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-
 
 	<!-- service包 -->
 	<context:component-scan
@@ -22,16 +19,20 @@
 	<!-- 支持注解方式声明式事务 -->
 	<tx:annotation-driven
 		transaction-manager="transactionManager" proxy-target-class="true" />
-	<!-- dao -->
-	<jpa:repositories base-package="cn.boz.jpa"
+	<!-- Spring data 的repository配置位置，主要配置Repository接口的所在位置，以及接口实现类名称后缀 -->
+	<jpa:repositories base-package="cn.boz.jpa.dao"
 		repository-impl-postfix="Impl"
 		entity-manager-factory-ref="entityManagerFactory"
 		transaction-manager-ref="transactionManager" />
+		
+		
+	
 	<!-- 实体管理器 -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="cn.boz.jpa" />
+		<!-- 指定持久化实现产商类,不同厂商不一样，hibernate是PersistenceProvider,如果classpath只有一个是不需要进行配置的 -->
 		<property name="persistenceProvider">
 			<bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
 		</property>
@@ -55,7 +56,7 @@
 					value="true 1, false 0" />
 				<entry key="hibernate.default_batch_fetch_size" value="16" />
 				<entry key="hibernate.max_fetch_depth" value="2" />
-				<entry key="hibernate.generate_statistics" value="true" />
+				<entry key="hibernate.generate_statistics" value="false" />
 				<entry key="hibernate.bytecode.use_reflection_optimizer"
 					value="true" />
 				<entry key="hibernate.cache.use_second_level_cache"
@@ -63,6 +64,7 @@
 				<entry key="hibernate.cache.use_query_cache" value="false" />
 			</map>
 		</property>
+		
 	</bean>
 
 	<!-- 事务管理器 -->
@@ -71,24 +73,14 @@
 		<property name="entityManagerFactory"
 			ref="entityManagerFactory" />
 	</bean>
-	<!-- 数据源 -->
-	<!-- <bean id="dataSource"
-		class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<property name="driver" value="com.mysql.jdbc.Driver"/>
-		<property name="url"
-			value="jdbc:mysql:///cas?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC" />
-		<property name="username" value="root" />
-		<property name="password" value="" />
 
-	</bean> -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
 		<property name="jdbcUrl"
-			value="jdbc:mysql:///cas?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"></property>
+			value="jdbc:mysql:///sdbf?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"></property>
 		<property name="driverClassName"
 			value="com.mysql.jdbc.Driver"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value=""></property>
 	</bean>
-
 
 </beans>
