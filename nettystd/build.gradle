@@ -40,6 +40,10 @@ dependencies {
 	compile group: 'com.lmax', name: 'disruptor', version:'3.3.7' 
 	// https://mvnrepository.com/artifact/io.netty/netty
 	compile group: 'io.netty', name: 'netty-all', version: '4.1.28.Final'
+	// https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver
+	// https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver
+	compile group: 'org.mongodb', name: 'mongo-java-driver', version: '3.2.2'
+	
 	
 	
     
