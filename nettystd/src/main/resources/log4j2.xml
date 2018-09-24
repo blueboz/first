@@ -58,6 +58,10 @@
 					onMismatch="NEUTRAL" />
 			</Filters>
 		</File>
+		<NoSql name="mongoApp">
+			<MongoDb databaseName="blueboz"
+				collectionName="log" server="127.0.0.1" />
+		</NoSql>
 	</Appenders>
 	<!-- 定义logger们 -->
 	<Loggers>
@@ -78,15 +82,15 @@
 		<Logger name="cn.boz.nettystd.controller" level="info"
 			additivity="true">
 			<AppenderRef ref="warnlog" />
-			<AppenderRef ref="controller" />
+			<AppenderRef ref="mongoApp" />
 		</Logger>
 		<Logger name="cn.boz.nettystd.service" level="info"
 			additivity="true">
-			<AppenderRef ref="service" />
+			<AppenderRef ref="mongoApp" />
 		</Logger>
 		<Logger name="cn.boz.nettystd.dao" level="info"
 			additivity="true">
-			<AppenderRef ref="dao" />
+			<AppenderRef ref="mongoApp" />
 		</Logger>
 	</Loggers>
 </Configuration>
