@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@//19.131.100.226:1522/zhsp" userId="zhspdev"
+			password="zhspdev">
+		</jdbcConnection>
+
+		<!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql:///activiti?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Hongkong" 
+			userId="root" password=""> </jdbcConnection> -->
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="true" />
+		</javaTypeResolver>
+
+		<javaModelGenerator
+			targetPackage="cn.boz.domain.ora.pojo"
+			targetProject="nettystd\src\main\java">
+			<property name="enableSubPackages" value="false" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="cn.boz.ora.mapper"
+			targetProject="nettystd\src\main\java">
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="cn.boz.ora.mapper"
+			targetProject="nettystd\src\main\java">
+
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+
+		<!-- <table tableName="act_evt_log"></table> <table tableName="act_ge_bytearray"></table> 
+			<table tableName="act_ge_property"></table> <table tableName="act_hi_actinst"></table> 
+			<table tableName="act_hi_attachment"></table> <table tableName="act_hi_comment"></table> 
+			<table tableName="act_hi_detail"> <columnOverride column="DOUBLE_" property="doubleval" 
+			/> <columnOverride column="LONG_" property="longval" /> </table> <table tableName="act_hi_identitylink"></table> 
+			<table tableName="act_hi_procinst"></table> <table tableName="act_hi_taskinst"></table> 
+			<table tableName="act_hi_varinst"> <columnOverride column="DOUBLE_" property="doubleval" 
+			/> <columnOverride column="LONG_" property="longval" /> </table> <table tableName="act_id_group"></table> 
+			<table tableName="act_id_info"></table> <table tableName="act_id_membership"></table> 
+			<table tableName="act_id_user"></table> <table tableName="act_procdef_info"></table> 
+			<table tableName="act_re_deployment"></table> <table tableName="act_re_model"></table> 
+			<table tableName="act_re_procdef"></table> <table tableName="act_ru_event_subscr"></table> 
+			<table tableName="act_ru_execution"></table> <table tableName="act_ru_identitylink"></table> 
+			<table tableName="act_ru_job"></table> <table tableName="act_ru_task"></table> 
+			<table tableName="act_ru_variable"> <columnOverride column="DOUBLE_" property="doubleval" 
+			/> <columnOverride column="LONG_" property="longval" /> </table> -->
+	<!-- 	<table tableName="DBA_USERS" schema="SYS"></table>
+		<table tableName="DBA_SYS_PRIVS" schema="SYS"></table>
+		<table tableName="DBA_ROLE_PRIVS" schema="SYS"></table>
+		<table tableName="USER_SYS_PRIVS" schema="SYS"></table>
+		<table tableName="USER_ROLE_PRIVS" schema="SYS"></table>
+		<table tableName="ROLE_SYS_PRIVS" schema="SYS"></table> -->
+		<table tableName="dba_tab_comments" schema="SYS"></table>
+		<table tableName="dba_col_comments" schema="SYS"></table>
+	</context>
+</generatorConfiguration>
