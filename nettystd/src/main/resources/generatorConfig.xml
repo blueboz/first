@@ -59,7 +59,6 @@
 		<table tableName="USER_SYS_PRIVS" schema="SYS"></table>
 		<table tableName="USER_ROLE_PRIVS" schema="SYS"></table>
 		<table tableName="ROLE_SYS_PRIVS" schema="SYS"></table> -->
-		<table tableName="dba_tab_comments" schema="SYS"></table>
-		<table tableName="dba_col_comments" schema="SYS"></table>
+		<table tableName="dba_tab_columns" schema="SYS"></table>
 	</context>
 </generatorConfiguration>
