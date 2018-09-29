@@ -91,7 +91,7 @@ public class Exporter {
 	 */
 	public void initStyle() {
 		try {
-			InputStream is = new FileInputStream("format.docx");
+			InputStream is = new FileInputStream("C:/bbb.docx");
 			doc2 = new XWPFDocument(is);
 			
 			CTStyles style = doc2.getStyle();
@@ -203,8 +203,13 @@ public class Exporter {
 
 		for (DbaTabComments dbaTabComments : rst) {
 			var map = new LinkedHashMap<String, Object>();
-			map.put("tableName", dbaTabComments.getTableName());
-			map.put("comment", dbaTabComments.getComments());
+			String tableName = dbaTabComments.getTableName();
+			map.put("tableName", tableName);
+			String comments = dbaTabComments.getComments();
+			if(comments==null||comments.trim().isEmpty()) {
+				comments=tableName;
+			}
+			map.put("comment",comments);
 			list.add(map);
 		}
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
@@ -249,6 +254,9 @@ public class Exporter {
 				if (colCommments != null && colCommments.size() > 0) {
 					DbaColComments comment = colCommments.get(0);
 					String comments = comment.getComments();
+					if(comments==null||comments.trim().isEmpty()) {
+						comments=columnName;
+					}
 					hashMap.put("comments", comments);
 				}
 
@@ -284,7 +292,7 @@ public class Exporter {
 			hmap.put("cname", "字段名");
 			hmap.put("dtype", "字段类型");
 			hmap.put("dlen", "长度");
-			hmap.put("owner", "所有者");
+			//hmap.put("owner", "所有者");
 			hmap.put("dnull", "可空");
 			hmap.put("dataDefault", "缺省值");
 			hmap.put("constraint", "约束");
