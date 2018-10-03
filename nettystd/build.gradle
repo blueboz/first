@@ -52,6 +52,11 @@ project.sourceCompatibility=1.10
 
 project.targetCompatibility=1.10
 
+
+
 tasks.withType(JavaCompile) {  
     options.encoding = "UTF-8"  
 }
+
+println this
+
