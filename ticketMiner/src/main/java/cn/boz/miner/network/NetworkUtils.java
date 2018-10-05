@@ -66,4 +66,24 @@ public final class NetworkUtils {
 		Map rst = HttpRequester.getInstance().jsonPost(url, params);
 		return rst;
 	}
+	
+	/**
+	 * 续命
+	 * @return
+	 */
+	public Map checkInLiangChenyun() {
+		String url="https://xn--9kq677j3ki.app/user/checkin";
+		Map map = HttpRequester.getInstance().jsonPost(url,null);
+		return map;
+	}
+	
+	/**
+	 * 登出
+	 * @return
+	 */
+	public String logoutLiangChenYun() {
+		String url="https://xn--9kq677j3ki.app/user/logout";
+		return HttpRequester.getInstance().getRequest(url);
+	}
+	
 }
